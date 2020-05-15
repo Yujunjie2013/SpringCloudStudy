@@ -1,0 +1,43 @@
+server:
+  port: 9001
+  tomcat:
+    max-threads: 200
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: service-product
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+  jpa:
+    database: MySQL
+    show-sql: true
+    open-in-view: true
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+#配置eureka注册中心地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/
+  instance:
+    #    向注册中心注册服务ID，这里的服务ID写成当前服务的IP和端口号
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    health-check-url-path: /actuator/health
+    lease-renewal-interval-in-seconds: 5  #默认心跳时间是30，为了方便测试，这里改成5
+    lease-expiration-duration-in-seconds: 15 #续约到期时间，多长时间没有心跳，剔除该服务(默认是90 )
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

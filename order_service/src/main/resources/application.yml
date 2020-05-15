@@ -1,0 +1,74 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: service-order
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+  jpa:
+    database: MySQL
+    show-sql: true
+    open-in-view: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+#    password: ${REDIS_PASSWORD:}
+
+
+#配置eureka注册中心地址
+eureka:
+  client:
+    service-url:
+      #      集群模式下多个地址之间用逗号隔开
+      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/
+  instance:
+    health-check-url-path: /actuator/health
+    #    向注册中心注册服务ID，这里的服务ID写成当前服务的IP和端口号
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 5  #默认心跳时间是30，为了方便测试，这里改成5
+    lease-expiration-duration-in-seconds: 15 #续约到期时间，多长时间没有心跳，剔除该服务(默认是90 )
+
+service-product:
+  ribbon:
+    #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #自定义 负载均衡策略，默认是轮询，这里改成随机
+    connectTimeout: 2000 #Ribbon的连接超时时间
+    ReadTimeout: 4000 #Ribbon读取数据的超时时间
+    OkToRetryOnAllOperations: true #是否对所有操作都重试
+    MaxAutoRetriesNextServer: 1 #切换实例的重试次数
+    MaxAutoRetries: 1 #当前实例的重试次数
+
+#  配置hystrix默认的超时时间,默认是1000毫秒如果没有相应者服务降级，这里改成3000毫秒
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 20 #触发熔断的最小请求次数，默认20
+        sleepWindowInMilliseconds: 10000 #熔断多少秒后去尝试请求
+        errorThresholdPercentage: 50 #触发熔断的失败请求最小占比，默认50%
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+
+#使用feign进行熔断
+feign:
+  hystrix:
+    enabled: true #开启hystrix
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 4000 #配置超时时间，如果耗时超过该时间，则会进行服务降级
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

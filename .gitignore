@@ -1,0 +1,10 @@
+# Project exclude paths
+/api_gateway_server/target/
+/api_zuul_server/target/
+/common/target/
+/entity/target/
+/eureka_server/target/
+/import_test/target/
+/jedis/target/
+/order_service/target/
+/product_service/target/

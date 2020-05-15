@@ -1,0 +1,41 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway-server
+  cloud:
+    gateway:
+      #以下是2种路由方式，任意一种即可，也可以两种都用
+#      routes:
+#        #1、路由配置：路由id，路由到微服务的uri,断言条件
+#        - id: service-product
+#          #          uri: http://127.0.0.1:9001 #服务微服务请求地址
+#          uri: lb://service-product #lb:根据微服务名称从注册中心中拉取服务请求路径
+#          predicates:
+#            #            - Path=/product/**
+#            - Path=/product-service/**
+#          filters:
+#            #http://localhost:8080/product-service/product/1，通过这种方式就可以访问到商品服务
+#            - RewritePath=/product-service/(?<segment>.*),/$\{segment} #路径重写过滤器
+#            - name: RequestRateLimiter
+#              args:
+#                #使用spEL从容器中获取对象,这个pathKeyResolver是我们自己定义的类
+#                key-resolver: '#{@pathKeyResolver}'
+#                #令牌桶每秒填充平均速率
+#                redis-rate-limiter.replenishRate: 1
+#                #令牌桶的上限（令牌桶容量）
+#                redis-rate-limiter.burstCapacity: 3
+      #2、配置自动根据微服务名称进行路径转发 http://localhost:8080/service-product/product/1
+      discovery:
+        locator:
+          enabled: true #开启根据服务名称自动转发
+          lower-case-service-id: true #微服务名称以小写出现
+
+#配置eureka注册中心地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/
+  instance:
+    prefer-ip-address: true #使用IP地址注册
+

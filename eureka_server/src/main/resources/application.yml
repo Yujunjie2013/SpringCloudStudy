@@ -1,0 +1,23 @@
+server:
+  port: 9000
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false #是否将自己注册到注册中心，集群模式下设置为true
+    fetch-registry: false #是否从eureka中获取信息
+    #    这里模拟集群场景，将9000的注册到8000上，将8000的注册到9000端口上
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:9000/eureka/
+spring:
+  application:
+    name: eureka-server
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
