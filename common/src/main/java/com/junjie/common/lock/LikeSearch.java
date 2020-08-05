@@ -1,5 +1,7 @@
 package com.junjie.common.lock;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
@@ -7,6 +9,20 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
 public class LikeSearch<T> {
+    public static void main(String[] args) {
+        LikeSearch<String> stringLikeSearch = new LikeSearch<>();
+        stringLikeSearch.put("俊杰", "河南");
+        stringLikeSearch.put("李俊杰", "河南");
+        stringLikeSearch.put("欧阳俊杰", "新疆");
+        stringLikeSearch.put("俊a杰", "河南");
+        stringLikeSearch.put("俊a杰a", "河a南");
+        stringLikeSearch.put("张三", "上海");
+        stringLikeSearch.put("李四", "北京");
+        Collection<String> list = stringLikeSearch.search("河南", 3);
+        for (String s : list) {
+            System.out.println("内容:" + s);
+        }
+    }
 
     private final CharColumn<T>[] columns = new CharColumn[Character.MAX_VALUE];
 
@@ -17,20 +33,26 @@ public class LikeSearch<T> {
     private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
     private final Lock r = rwl.readLock();
     private final Lock w = rwl.writeLock();
-
+    
     public void put(T t, String value) {
         w.lock();
-        char[] chars = value.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            char c = chars[i];
-            CharColumn<T> column = columns[c];
-            if (null == column) {
-                column = new CharColumn<T>();
-                columns[c] = column;
+        try {
+            if (StringUtils.isEmpty(value)) {
+                throw new NullPointerException("value 不能为空");
             }
-            column.add(t, (byte) i);
+            char[] chars = value.toCharArray();
+            for (int i = 0; i < chars.length; i++) {
+                char c = chars[i];
+                CharColumn<T> column = columns[c];
+                if (null == column) {
+                    column = new CharColumn<T>();
+                    columns[c] = column;
+                }
+                column.add(t, (byte) i);
+            }
+        } finally {
+            w.unlock();
         }
-        w.unlock();
     }
 
 
@@ -151,8 +173,7 @@ public class LikeSearch<T> {
 
     }
 
-    private class CharColumn<T> {
-
+    private static class CharColumn<T> {
 
         ConcurrentHashMap<T, byte[]> poxIndex = new ConcurrentHashMap<T, byte[]>();
 

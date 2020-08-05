@@ -25,8 +25,8 @@ public class GiftmallApplicationTests {
 
     private CyclicBarrier cyclicBarrier = new CyclicBarrier(100);
     private CyclicBarrier cyclicBarrier1 = new CyclicBarrier(100);
-    @Resource
-    private TestCharVarcharTextMapper testCharVarcharTextMapper;
+//    @Resource
+//    private TestCharVarcharTextMapper testCharVarcharTextMapper;
 
 
     @Test
@@ -74,7 +74,7 @@ public class GiftmallApplicationTests {
         testCharVarcharText.setMychar("mychar1");
         testCharVarcharText.setMyvarchar("myvarchar1");
         testCharVarcharText.setMytext("myText1");
-        testCharVarcharTextMapper.insert(testCharVarcharText);
+//        testCharVarcharTextMapper.insert(testCharVarcharText);
     }
 
 }

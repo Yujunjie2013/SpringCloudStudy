@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import javax.cache.annotation.CachePut;
+
 @Configuration
 public class RedisConfig {
 
@@ -25,7 +27,7 @@ public class RedisConfig {
     public Redisson redisson() {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://" + host + ":6379")
-                .setDatabase(10);
+                .setDatabase(0);
         return (Redisson) Redisson.create(config);
     }
 }

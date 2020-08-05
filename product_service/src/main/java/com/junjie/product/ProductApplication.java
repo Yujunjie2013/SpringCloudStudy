@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 
+@EnableEurekaClient
 @SpringBootApplication(scanBasePackages = {"com.junjie"})
 @EntityScan("com.junjie.product.entity")
-@EnableEurekaClient
 @ComponentScan(basePackages = {"com.junjie"})
 public class ProductApplication {
     public static void main(String[] args) {

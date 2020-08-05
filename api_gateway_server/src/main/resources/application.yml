@@ -15,7 +15,7 @@ spring:
 #            #            - Path=/product/**
 #            - Path=/product-service/**
 #          filters:
-#            #http://localhost:8080/product-service/product/1，通过这种方式就可以访问到商品服务
+#            #http://localhost:8080/service-product/product/1，通过这种方式就可以访问到商品服务
 #            - RewritePath=/product-service/(?<segment>.*),/$\{segment} #路径重写过滤器
 #            - name: RequestRateLimiter
 #              args:

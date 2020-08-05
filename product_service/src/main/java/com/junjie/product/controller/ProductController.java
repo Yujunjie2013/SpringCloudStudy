@@ -1,5 +1,6 @@
 package com.junjie.product.controller;
 
+import com.junjie.common.annotation.RequestLimit;
 import com.junjie.common.bean.OperationLog;
 import com.junjie.common.util.ExcelUtils;
 import com.junjie.product.entity.Product;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/product")
@@ -63,6 +64,7 @@ public class ProductController {
     }
 
     @GetMapping("/export")
+    @RequestLimit(limitValue = 1, timeOut = 1, timeUnit = TimeUnit.SECONDS)//并发1，获取锁等待1秒
     public void exportFile(HttpServletResponse response) {
         long start = System.currentTimeMillis();
         List<OperationLog> personList = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.junjie.test;
 
 import com.junjie.test.bean.User;
 import com.junjie.test.config.EnableUserBean;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,8 @@
 server:
   port: 9002
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: service-order
   datasource:

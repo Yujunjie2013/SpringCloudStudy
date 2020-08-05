@@ -1,12 +1,11 @@
 package com.junjie.product.service.impl;
 
-import com.junjie.common.lock.RedisLock;
+import com.junjie.common.annotation.RedisLock;
 import com.junjie.product.dao.ProductDao;
 import com.junjie.product.entity.Product;
 import com.junjie.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    @RedisLock(lockIndex = 0)
+    @RedisLock(key = "'test'+#id")
     public Product findById(Long id) {
         try {
             Thread.sleep(500);
