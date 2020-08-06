@@ -1,24 +1,33 @@
 package com.junjie.order.controller;
 
+import com.junjie.common.bean.BaseResponseBody;
+import com.junjie.order.entity.TbOrder;
 import com.junjie.order.feign.ProductFeignClient;
-import com.junjie.product.entity.Product;
+import com.junjie.order.service.ITbOrderService;
+import com.junjie.product.entity.TbProduct;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
+    @Autowired
+    private ITbOrderService iTbOrderService;
 
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
     private ProductFeignClient productFeignClient;
+
+
+    @PostMapping("/add")
+    public BaseResponseBody addOrder(@RequestBody TbOrder tbOrder) {
+        boolean save = iTbOrderService.save(tbOrder);
+        return save ? BaseResponseBody.success(tbOrder) : BaseResponseBody.failure();
+    }
 
     //    通过restTemplateribbon方式调用,结合Hystrix
 //    @GetMapping("/buy/{id}")
@@ -34,19 +43,19 @@ public class OrderController {
     //    通过ribbon方式调用
     @GetMapping("/buy/{id}")
     @HystrixCommand(fallbackMethod = "hystrixProduct")
-    public Product findById(@PathVariable Long id) {
+    public TbProduct findById(@PathVariable Long id) {
         //没有用ribbon之前
 //        Product product = restTemplate.getForObject("http://127.0.0.1:9001/product/" + id, Product.class);
         //使用ribbon的方式，只需要将服务名service-product和需要调用的地址写上就可以，不在需要使用ip的方式调用
-        Product product = restTemplate.getForObject("http://service-product/product/" + id, Product.class);
-        return product;
+        TbProduct tbProduct = restTemplate.getForObject("http://service-product/product/" + id, TbProduct.class);
+        return tbProduct;
     }
 
     //通过Feign方式调用
     @GetMapping("/buyFeign/{id}")
-    public Product findByIdFeign(@PathVariable Long id) {
-        Product product = productFeignClient.findById(id);
-        return product;
+    public TbProduct findByIdFeign(@PathVariable Long id) {
+        TbProduct tbProduct = productFeignClient.findById(id);
+        return tbProduct;
     }
 
     /**
@@ -55,10 +64,10 @@ public class OrderController {
      * @param id
      * @return
      */
-    public Product hystrixProduct(Long id) {
-        Product product = new Product();
-        product.setProductName("我被降级啦");
-        return product;
+    public TbProduct hystrixProduct(Long id) {
+        TbProduct tbProduct = new TbProduct();
+        tbProduct.setProductName("我被降级啦");
+        return tbProduct;
     }
 
 }

@@ -1,55 +1,38 @@
 package com.junjie.product.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.junjie.common.annotation.RedisLock;
-import com.junjie.product.dao.ProductDao;
-import com.junjie.product.entity.Product;
-import com.junjie.product.service.ProductService;
+import com.junjie.common.config.mybatis.BaseServiceImpl;
+import com.junjie.product.dao.IProductDao;
+import com.junjie.product.entity.TbProduct;
+import com.junjie.product.service.IProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.Optional;
 
 @Service
 @Slf4j
-public class ProductServiceImpl implements ProductService {
-
-    @Autowired
-    private ProductDao productDao;
+public class ProductServiceImpl extends BaseServiceImpl<IProductDao, TbProduct> implements IProductService {
 
     @Override
     @RedisLock(key = "'test'+#id")
-    public Product findById(Long id) {
+    public TbProduct findById(Long id) {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Optional<Product> optional = productDao.findById(id);
-        if (optional.isPresent()) {
-            Product product = optional.get();
-            product.setPrice(product.getPrice().add(BigDecimal.valueOf(1)));
-            productDao.save(product);
-            return product;
-        }
-        return null;
+        return getById(id);
 
     }
 
     @Override
-    public void save(Product product) {
-        productDao.save(product);
-    }
-
-    @Override
-    public Integer update(Product product) {
-        productDao.save(product);
+    public Integer update(TbProduct tbProduct) {
+        update(tbProduct, Wrappers.emptyWrapper());
         return 1;
     }
 
     @Override
     public void delete(Long id) {
-        productDao.deleteById(id);
+        removeById(id);
     }
 }

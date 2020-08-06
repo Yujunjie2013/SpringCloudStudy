@@ -1,5 +1,6 @@
 package com.junjie.product;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication(scanBasePackages = {"com.junjie"})
 @EntityScan("com.junjie.product.entity")
 @ComponentScan(basePackages = {"com.junjie"})
+@MapperScan(basePackages = {"com.junjie.product.dao"})
 public class ProductApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductApplication.class, args);

@@ -1,18 +1,26 @@
-package com.junjie.common.bean;
+package com.junjie.product.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import lombok.Data;
+import com.junjie.common.bean.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-@TableName(value = "tb_product")
-public class TbProduct implements Serializable {
+import java.math.BigDecimal;
+
+/**
+ * 商品实体类
+ */
+@Getter
+@Setter
+@TableName("tb_product")
+@ToString
+public class TbProduct extends BaseEntity {
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 商品名称

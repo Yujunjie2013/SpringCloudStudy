@@ -1,14 +1,11 @@
 package com.junjie.product;
 
 import com.junjie.common.bean.TestCharVarcharText;
-import com.junjie.product.dao.TestCharVarcharTextMapper;
-import com.junjie.product.service.ProductService;
+import com.junjie.product.service.IProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -21,7 +18,7 @@ import java.util.concurrent.CyclicBarrier;
 //@SpringBootTest
 public class GiftmallApplicationTests {
     @Resource
-    private ProductService goodsService;
+    private IProductService goodsService;
 
     private CyclicBarrier cyclicBarrier = new CyclicBarrier(100);
     private CyclicBarrier cyclicBarrier1 = new CyclicBarrier(100);

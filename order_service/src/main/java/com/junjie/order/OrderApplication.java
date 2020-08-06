@@ -1,8 +1,10 @@
 package com.junjie.order;
 
 import org.aspectj.lang.annotation.Aspect;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
@@ -17,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 @Aspect
 @SpringBootApplication(scanBasePackages = {"com.junjie"})
 @ComponentScan(basePackages = {"com.junjie"})
+@MapperScan(basePackages = {"com.junjie.order.dao"})
 public class OrderApplication {
     /**
      * 使用RestTemplate调用远程服务

@@ -1,7 +1,7 @@
 package com.test;
 
-import com.junjie.common.bean.TbOrder;
-import com.junjie.order.dao.TbOrderMapper;
+import com.junjie.order.entity.TbOrder;
+import com.junjie.order.dao.ITbOrderMapper;
 import com.junjie.order.service.GoodsService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +10,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
@@ -66,8 +63,8 @@ public class GiftmallApplicationTests {
         InputStream resourceAsStream = Resources.getResourceAsStream("mybatis-config.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        TbOrderMapper mapper = sqlSession.getMapper(TbOrderMapper.class);
-        TbOrder tbOrder = mapper.findOnById(1);
+        ITbOrderMapper mapper = sqlSession.getMapper(ITbOrderMapper.class);
+        TbOrder tbOrder = mapper.selectById(1);
 //        TbOrder tbOrder = sqlSession.selectOne("com.junjie.order.dao.TbOrderMapper.selectOneById", 1);
 //        TbOrder tbOrder = sqlSession.selectOne("com.junjie.order.dao.TbOrderMapper.findOnById", 1);
         System.out.println("哈哈："+tbOrder);

@@ -1,12 +1,14 @@
 package com.junjie.common.bean;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 /**
@@ -20,18 +22,25 @@ public class BaseEntity implements Serializable {
      * 创建时间
      */
     @Excel(name = "创建时间", width = 30d, orderNum = "20", format = "yyyy/MM/dd HH:mm:ss")
-    protected Date createTime;
+    @TableField(fill = FieldFill.INSERT)
+    protected LocalDateTime createTime;
 
     /**
      * 更新时间
      */
     @Excel(name = "修改时间", width = 30d, orderNum = "30", format = "yyyy/MM/dd HH:mm:ss")
-    protected Date updateTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    protected LocalDateTime updateTime;
 
     /**
      * 逻辑删除
      */
     @JsonIgnore
+    @TableField(select = false)
     protected Boolean logicDelete;
+    /**
+     * 乐观锁
+     */
+    @TableField(select = false)
     private Integer version;
 }

@@ -1,10 +1,11 @@
 package com.junjie.product.controller;
 
 import com.junjie.common.annotation.RequestLimit;
+import com.junjie.common.bean.BaseResponseBody;
 import com.junjie.common.bean.OperationLog;
 import com.junjie.common.util.ExcelUtils;
-import com.junjie.product.entity.Product;
-import com.junjie.product.service.ProductService;
+import com.junjie.product.entity.TbProduct;
+import com.junjie.product.service.IProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -21,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ProductController {
     @Autowired
-    private ProductService productService;
+    private IProductService iProductService;
     private Map<String, String> map = new HashMap<>();
     @Value("${server.port}")
     private String port;
@@ -29,14 +33,20 @@ public class ProductController {
     private String address;
 
     @GetMapping("/{id}")
-    public Product findById(@PathVariable Long id) {
-        Product product = productService.findById(id);
-        return product;
+    public BaseResponseBody findById(@PathVariable Long id) {
+        TbProduct tbProduct = iProductService.findById(id);
+//        log.info("查询数据"+tbProduct.toString());
+        return BaseResponseBody.success(tbProduct);
     }
 
-    @PostMapping()
-    public String save(@RequestBody Product product) {
-        productService.save(product);
+    @GetMapping("/list")
+    public BaseResponseBody<List<TbProduct>> getAll() {
+        return BaseResponseBody.success(iProductService.list());
+    }
+
+    @PostMapping("/add")
+    public String save(@RequestBody TbProduct tbProduct) {
+        iProductService.save(tbProduct);
         return "保存成功";
     }
 
@@ -74,7 +84,6 @@ public class ProductController {
             personVo.setPhone("1352688023" + i);
             personVo.setPlatform(i / 2 == 0 ? "小程序" : "web");
             personVo.setOperationContent("测试操作");
-            personVo.setCreateTime(new Date());
             personList.add(personVo);
         }
         log.debug("导出excel所花时间：" + (System.currentTimeMillis() - start));

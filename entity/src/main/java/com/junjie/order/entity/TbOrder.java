@@ -1,17 +1,19 @@
-package com.junjie.common.bean;
+package com.junjie.order.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import lombok.Data;
+import com.junjie.common.bean.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @TableName(value = "tb_order")
 @ToString
-public class TbOrder implements Serializable {
+public class TbOrder extends BaseEntity {
     @TableId(value = "id", type = IdType.INPUT)
     private Integer id;
 
