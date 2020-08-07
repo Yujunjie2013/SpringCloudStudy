@@ -1,5 +1,6 @@
 package com.junjie.gateway.filter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -11,6 +12,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Component
+@Slf4j
 public class LoginFilter implements GlobalFilter, Ordered {
     /**
      * 执行过滤器中的业务逻辑
@@ -21,11 +23,11 @@ public class LoginFilter implements GlobalFilter, Ordered {
      */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        System.out.println("执行全局过滤器");
         ServerHttpRequest request = exchange.getRequest();
         String token = request.getQueryParams().getFirst("access-token");
+        log.info("收到请求:" + request.getPath());
         if (StringUtils.isEmpty(token)) {
-            System.out.println("认证失败");
+            log.info("认证失败");
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }

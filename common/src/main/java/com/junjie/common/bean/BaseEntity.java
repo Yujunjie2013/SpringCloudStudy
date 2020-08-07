@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 /**
@@ -23,14 +24,14 @@ public class BaseEntity implements Serializable {
      */
     @Excel(name = "创建时间", width = 30d, orderNum = "20", format = "yyyy/MM/dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT)
-    protected LocalDateTime createTime;
+    protected Date createTime;
 
     /**
      * 更新时间
      */
     @Excel(name = "修改时间", width = 30d, orderNum = "30", format = "yyyy/MM/dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    protected LocalDateTime updateTime;
+    protected Date updateTime;
 
     /**
      * 逻辑删除
