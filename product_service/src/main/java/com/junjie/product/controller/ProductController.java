@@ -35,7 +35,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public BaseResponseBody findById(@PathVariable Long id) {
         TbProduct tbProduct = iProductService.findById(id);
-//        log.info("查询数据"+tbProduct.toString());
+        log.info("查询数据:{}",tbProduct.toString());
         return BaseResponseBody.success(tbProduct);
     }
 

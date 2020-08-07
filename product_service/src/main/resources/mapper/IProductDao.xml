@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.junjie.product.dao.IProductDao">
+    <select id="findByPrice" resultType="com.junjie.product.entity.TbProduct">
+        select * from tb_product where price=#{price}
+    </select>
+</mapper>

@@ -25,7 +25,6 @@ public class SqlCostInterceptor implements Interceptor {
     public Object intercept(Invocation arg0) throws Throwable {
         long startTime = System.currentTimeMillis();
         try {
-
             return arg0.proceed();
         } finally {
             long endTime = System.currentTimeMillis();
