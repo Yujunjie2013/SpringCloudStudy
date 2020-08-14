@@ -35,3 +35,8 @@ mybatis-plus:
 #      meta-object-handler: com.junjie.common.config.mybatis.TimeMetaObjectHandler
 
 #      metaObjectHandler
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/**/*.xml

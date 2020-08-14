@@ -9,6 +9,7 @@ import com.junjie.common.config.mybatis.MySqlInjector;
 import com.junjie.common.config.mybatis.TimeMetaObjectHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ public class MasterDataSourceConfig {
     public SqlSessionFactory masterSqlSessionFactory(DataSource masterDataSource,
                                                      GlobalConfig globalConfig)
             throws Exception {
+//        BaseTypeHandler
         MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
         sessionFactory.setDataSource(masterDataSource);
         sessionFactory.setMapperLocations(

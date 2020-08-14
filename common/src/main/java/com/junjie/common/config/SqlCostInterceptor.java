@@ -1,5 +1,6 @@
 package com.junjie.common.config;
 
+import com.alibaba.druid.filter.logging.Log4jFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.plugin.*;
@@ -18,6 +19,7 @@ import java.util.Properties;
         @Signature(type = StatementHandler.class, method = "batch", args = {Statement.class})})
 @Component
 @Configuration
+@Slf4j
 public class SqlCostInterceptor implements Interceptor {
     private Logger logger = LoggerFactory.getLogger(SqlCostInterceptor.class);
 
