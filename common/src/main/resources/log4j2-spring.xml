@@ -114,7 +114,7 @@
     <loggers>
 
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
-        <logger name="org.mybatis" level="info" additivity="false">
+        <logger name="org.apache.ibatis" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </logger>
         <!--监控系统信息-->

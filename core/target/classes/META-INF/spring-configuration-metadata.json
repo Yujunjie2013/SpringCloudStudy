@@ -1,0 +1,33 @@
+{
+  "groups": [
+    {
+      "name": "org.junjie",
+      "type": "org.junjie.security.core.properties.SecurityProperties",
+      "sourceType": "org.junjie.security.core.properties.SecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "org.junjie.browser",
+      "type": "org.junjie.security.core.properties.BrowserProperties",
+      "sourceType": "org.junjie.security.core.properties.SecurityProperties"
+    },
+    {
+      "name": "org.junjie.code",
+      "type": "org.junjie.security.core.properties.ValidateCodeProperties",
+      "description": "验证码（包含短信验证，图形验证）",
+      "sourceType": "org.junjie.security.core.properties.SecurityProperties"
+    },
+    {
+      "name": "org.junjie.oauth2",
+      "type": "org.junjie.security.core.properties.OAuth2Properties",
+      "sourceType": "org.junjie.security.core.properties.SecurityProperties"
+    },
+    {
+      "name": "org.junjie.social",
+      "type": "org.junjie.security.core.properties.SocialProperties",
+      "sourceType": "org.junjie.security.core.properties.SecurityProperties"
+    }
+  ],
+  "hints": []
+}

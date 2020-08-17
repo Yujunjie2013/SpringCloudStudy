@@ -1,0 +1,5 @@
+jdbc包下面的类是从spring-social-core:1.1.6包里面copy出来的
+因为在原类中有许多字段使用的是rank，但是在mysql中rank作为保留字段存在，所以
+我们自行复制出来之后将MyJdbcConnectionRepository中所有的rank替换成sequence
+
+在SocialConfig类中创建UsersConnectionRepository时，使用我们自定义的MyJdbcUserConnectionRepository
