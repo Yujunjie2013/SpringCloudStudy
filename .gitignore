@@ -13,12 +13,7 @@
 /api_gateway_server/api_gateway_server.iml
 /api_zuul_server/api_zuul_server.iml
 /app/app.iml
-/auth-server/target/classes/com/example/authserver/service/MyUserDetailsService.class
-/auth-server/target/classes/com/example/authserver/AuthServerApplication.class
-/auth-server/target/classes/application.yml
-/auth-server/target/test-classes/com/example/authserver/AuthServerApplicationTests.class
 /auth-server/auth-server.iml
-/auth-server/HELP.md
 /common/common.iml
 /core/core.iml
 /entity/entity.iml
