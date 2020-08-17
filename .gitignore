@@ -8,3 +8,5 @@
 /jedis/target/
 /order_service/target/
 /product_service/target/
+/app/target/
+/core/target/
