@@ -10,6 +10,7 @@
 /product_service/target/
 /app/target/
 /core/target/
+*/target
 /api_gateway_server/api_gateway_server.iml
 /api_zuul_server/api_zuul_server.iml
 /app/app.iml
