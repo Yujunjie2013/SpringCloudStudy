@@ -16,11 +16,11 @@ public class ProductServiceImpl extends BaseServiceImpl<IProductDao, TbProduct> 
     @Override
     @RedisLock(key = "'test'+#id")
     public TbProduct findById(Long id) {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return getById(id);
 
     }

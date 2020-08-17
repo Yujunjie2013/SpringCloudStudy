@@ -13,7 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.junjie"})
 @MapperScan(basePackages = {"com.junjie.product.dao"})
 public class ProductApplication {
+
     public static void main(String[] args) {
+        System.setProperty("log4j2File", "product");
         SpringApplication.run(ProductApplication.class, args);
     }
 }

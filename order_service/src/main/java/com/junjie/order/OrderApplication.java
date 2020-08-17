@@ -34,6 +34,7 @@ public class OrderApplication {
     }
 
     public static void main(String[] args) {
+        System.setProperty("log4j2File", "order");
         SpringApplication.run(OrderApplication.class, args);
     }
 }
