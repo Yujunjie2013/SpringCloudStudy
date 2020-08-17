@@ -10,6 +10,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 验证码校验器
+ */
 @RestController
 public class ValidateCodeController {
 

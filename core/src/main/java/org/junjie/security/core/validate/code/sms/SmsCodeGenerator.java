@@ -11,7 +11,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * 短信验证码生成器
  */
-@Component("smsCodeGenerator")
+//@Component("smsCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
     @Autowired
     private SecurityProperties securityProperties;
@@ -20,5 +20,13 @@ public class SmsCodeGenerator implements ValidateCodeGenerator {
     public ValidateCode generate(ServletWebRequest servletWebRequest) {
         String code = RandomStringUtils.random(securityProperties.getCode().getSms().getLength(),false,true);
         return new ValidateCode(code, securityProperties.getCode().getImage().getExpireIn());
+    }
+
+    public SecurityProperties getSecurityProperties() {
+        return securityProperties;
+    }
+
+    public void setSecurityProperties(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
     }
 }

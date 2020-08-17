@@ -65,4 +65,17 @@ public interface SecurityConstants {
      */
     String DEFAULT_SOCIAL_USER_INFO_URL = "/social/user";
 
+    /**
+     * 验证码生成器bean ID,自定义图形验证码生成器时需要使用该id
+     */
+    String IMAGE_CODE_GENERATOR_ID = "imageCodeGenerator";
+    /**
+     * 短信验证码生成器bean ID，自定义短信验证码生成器时需要使用该id
+     */
+    String SMS_CODE_GENERATOR_ID = "smsCodeGenerator";
+    /**
+     *验证码生成器(包含短信、图片)，smsCodeGenerator/imageCodeGenerator
+     */
+    String CODE_GENERATOR_ID = "CodeGenerator";
+
 }

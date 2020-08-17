@@ -36,6 +36,7 @@ public class ValidateCodeProcessorHolder {
      * @return 验证码处理器
      */
     public ValidateCodeProcessor findValidateCodeProcessor(String type) {
+        //smsValidateCodeProcessor/imageValidateCodeProcessor
         String name = type.toLowerCase() + ValidateCodeProcessor.class.getSimpleName();
         ValidateCodeProcessor processor = validateCodeProcessors.get(name);
         if (processor == null) {

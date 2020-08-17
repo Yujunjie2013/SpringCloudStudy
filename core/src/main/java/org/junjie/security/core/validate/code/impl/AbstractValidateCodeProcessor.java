@@ -1,6 +1,7 @@
 package org.junjie.security.core.validate.code.impl;
 
 import org.apache.commons.lang.StringUtils;
+import org.junjie.security.core.properties.SecurityConstants;
 import org.junjie.security.core.validate.code.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -54,7 +55,7 @@ public abstract class AbstractValidateCodeProcessor<V extends ValidateCode> impl
     @SuppressWarnings("unchecked")
     private V generate(ServletWebRequest request) throws NullPointerException {
         String type = getProcessorType(request);
-        ValidateCodeGenerator validateCodeGenerator = validateCodeGenerators.get(type + "CodeGenerator");
+        ValidateCodeGenerator validateCodeGenerator = validateCodeGenerators.get(type + SecurityConstants.CODE_GENERATOR_ID);
         if (validateCodeGenerator == null) {
             throw new NullPointerException("验证码生成器为空，无法生成验证码");
         }
