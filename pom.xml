@@ -13,11 +13,11 @@
         <module>order_service</module>
         <module>entity</module>
         <module>eureka_server</module>
-        <module>import_test</module>
+<!--        <module>import_test</module>-->
         <module>common</module>
         <module>api_zuul_server</module>
         <module>api_gateway_server</module>
-        <module>jedis</module>
+<!--        <module>jedis</module>-->
     </modules>
 
     <parent>
