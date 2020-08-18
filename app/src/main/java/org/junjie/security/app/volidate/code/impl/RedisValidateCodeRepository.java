@@ -1,6 +1,6 @@
 package org.junjie.security.app.volidate.code.impl;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junjie.security.core.validate.code.ValidateCode;
 import org.junjie.security.core.validate.code.ValidateCodeException;
 import org.junjie.security.core.validate.code.ValidateCodeRepository;

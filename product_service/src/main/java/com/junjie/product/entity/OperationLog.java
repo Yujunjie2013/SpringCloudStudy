@@ -1,6 +1,7 @@
-package com.junjie.common.bean;
+package com.junjie.product.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.junjie.common.bean.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

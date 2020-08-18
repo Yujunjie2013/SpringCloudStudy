@@ -1,7 +1,7 @@
 package org.junjie.security.app;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junjie.security.core.properties.OAuth2ClientProperties;
 import org.junjie.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -22,6 +23,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import java.util.ArrayList;
 
 @Configuration
+//声明开启 OAuth 授权服务器的功能。
 @EnableAuthorizationServer
 @Slf4j
 public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -66,6 +68,14 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
 //                .tokenKeyAccess("isAuthenticated()");// 获取密钥需要身份认证
 //
 //    }
+    /**
+     * tokenKey的访问权限表达式配置
+     */
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        //CheckTokenEndpoint
+        security.tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()");
+    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -74,7 +84,7 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
             for (OAuth2ClientProperties config : securityProperties.getOauth2().getClients()) {
                 builder
                         .withClient(config.getClientId())
-                        .secret(passwordEncoder.encode(config.getClientSecret()))//这里一定要这要用
+                        .secret(passwordEncoder.encode(config.getClientSecret()))//这里一定要这样用
                         .accessTokenValiditySeconds(config.getAccessTokenValiditySeconds())//令牌有效期
                         .authorizedGrantTypes("refresh_token", "password")
                         .refreshTokenValiditySeconds(2592000)//refreshToken的有效期

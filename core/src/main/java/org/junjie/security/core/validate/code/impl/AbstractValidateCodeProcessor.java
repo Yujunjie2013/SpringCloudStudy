@@ -1,6 +1,6 @@
 package org.junjie.security.core.validate.code.impl;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junjie.security.core.properties.SecurityConstants;
 import org.junjie.security.core.validate.code.*;
 import org.springframework.beans.factory.annotation.Autowired;

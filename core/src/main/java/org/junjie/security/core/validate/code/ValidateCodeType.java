@@ -6,12 +6,14 @@ package org.junjie.security.core.validate.code;
 
 import org.junjie.security.core.properties.SecurityConstants;
 
+import java.io.Serializable;
+
 /**
  *
  * 校验码类型
  *
  */
-public enum ValidateCodeType {
+public enum ValidateCodeType implements Serializable {
 
     /**
      * 短信验证码

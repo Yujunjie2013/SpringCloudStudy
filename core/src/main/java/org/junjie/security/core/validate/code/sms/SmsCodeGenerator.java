@@ -1,6 +1,6 @@
 package org.junjie.security.core.validate.code.sms;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junjie.security.core.properties.SecurityProperties;
 import org.junjie.security.core.validate.code.ValidateCode;
 import org.junjie.security.core.validate.code.ValidateCodeGenerator;

@@ -1,4 +1,4 @@
-package com.junjie.common.util;
+package com.junjie.product.utils;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;

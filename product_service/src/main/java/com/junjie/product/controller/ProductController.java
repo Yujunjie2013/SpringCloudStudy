@@ -2,8 +2,8 @@ package com.junjie.product.controller;
 
 import com.junjie.common.annotation.RequestLimit;
 import com.junjie.common.bean.BaseResponseBody;
-import com.junjie.common.bean.OperationLog;
-import com.junjie.common.util.ExcelUtils;
+import com.junjie.product.entity.OperationLog;
+import com.junjie.product.utils.ExcelUtils;
 import com.junjie.product.entity.TbProduct;
 import com.junjie.product.service.IProductService;
 import lombok.extern.slf4j.Slf4j;

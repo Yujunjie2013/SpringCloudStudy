@@ -30,3 +30,4 @@
 /logs/junjie/product/error.log
 /logs/junjie/product/info.log
 /logs/junjie/product/warn.log
+/logs/*

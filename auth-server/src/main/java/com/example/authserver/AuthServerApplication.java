@@ -3,7 +3,7 @@ package com.example.authserver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"org.junjie.security.*", "com.example.authserver"})
+@SpringBootApplication(scanBasePackages = {"com.junjie.common","org.junjie.security.*", "com.example.authserver"})
 public class AuthServerApplication {
 
     public static void main(String[] args) {

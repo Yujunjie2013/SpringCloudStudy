@@ -1,6 +1,6 @@
 package org.junjie.security.app.social.impl;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junjie.security.app.exception.AppSecretException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

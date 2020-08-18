@@ -1,6 +1,6 @@
 package org.junjie.security.browser;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junjie.security.core.support.SimpleResponse;
 import org.junjie.security.core.support.SocialUserInfo;
 import org.junjie.security.core.properties.SecurityConstants;
