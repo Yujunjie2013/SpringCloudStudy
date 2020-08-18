@@ -62,8 +62,6 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
         applyPasswordAuthenticationConfig(http);
         http.apply(validateCodeSecurityConfig)
                 .and()

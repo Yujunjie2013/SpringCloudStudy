@@ -4,14 +4,14 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.ComponentScan;
 
 @EnableEurekaClient
 @SpringBootApplication(scanBasePackages = {"com.junjie"})
 @EntityScan("com.junjie.product.entity")
-@ComponentScan(basePackages = {"com.junjie"})
-@MapperScan(basePackages = {"com.junjie.product.dao"})
+@MapperScan(basePackages = {"com.junjie.*.dao"})
+@EnableOAuth2Sso //配置接入 SSO 功能，可以看看 SsoSecurityConfigurer 类。
 public class ProductApplication {
 
     public static void main(String[] args) {

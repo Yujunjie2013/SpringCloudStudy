@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.MapUtils;
-import org.junjie.security.core.properties.LoginType;
 import org.junjie.security.core.properties.SecurityProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -16,7 +13,6 @@ import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAut
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -30,14 +26,12 @@ import java.nio.charset.StandardCharsets;
  * 登录成功处理器
  * SavedRequestAwareAuthenticationSuccessHandler是Spring默认的登录成功处理器
  */
-@Component("browserAuthenticationSuccessHandler")
-public class BrowserAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-    private Logger logger = LoggerFactory.getLogger(getClass());
+@Component("appAuthenticationSuccessHandler")
+public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private SecurityProperties securityProperties;
+
     @Autowired
     private ClientDetailsService clientDetailsService;
 
@@ -48,7 +42,6 @@ public class BrowserAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         logger.info("登录成功");
 
-//        BasicAuthenticationFilter
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Basic ")) {
             throw new UnapprovedClientAuthenticationException("请求头中无client信息");

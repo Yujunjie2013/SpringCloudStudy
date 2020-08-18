@@ -1,5 +1,9 @@
 server:
   port: 9001
+  servlet:
+    session:
+      cookie:
+        name: PRODUCT_ID # 自定义 Session 的 Cookie 名字，防止冲突。冲突后，会导致 SSO 登录失败。
   tomcat:
     max-threads: 200
 
@@ -64,10 +68,15 @@ management:
     health:
       show-details: ALWAYS
 
-##打印sql 执行日志
-#logging:
-#  level:
-#    com:
-#      junjie:
-#        product:
-#          dao: trace
+security:
+  oauth2:
+    # OAuth2 Client 配置，对应 OAuth2ClientProperties 类
+    client:
+      client-id: test
+      client-secret: test
+      # 访问令牌获取 URL，自定义的
+      access-token-uri: http://127.0.0.1:8080/oauth/token # 获取访问令牌的地址
+      user-authorization-uri: http://127.0.0.1:8080/oauth/authorize # 获取用户的授权码地址
+    # OAuth2 Resource 配置，对应 ResourceServerProperties 类
+    resource:
+      token-info-uri: http://127.0.0.1:8080/oauth/check_token # 校验访问令牌是否有效的地址

@@ -20,8 +20,8 @@ import java.io.IOException;
 /**
  * 登录失败处理器，SimpleUrlAuthenticationFailureHandler是Spring默认的失败处理器
  */
-@Component("browserAuthenticationFailureHandler")
-public class BrowserAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+@Component("appAuthenticationFailureHandler")
+public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -38,7 +38,8 @@ public class BrowserAuthenticationFailureHandler extends SimpleUrlAuthentication
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        logger.info("发生异常:" + exception.getMessage());
+        exception.printStackTrace();
+        logger.error("发生异常" + exception);
         if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
