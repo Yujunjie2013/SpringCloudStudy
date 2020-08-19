@@ -1,8 +1,3 @@
-server:
-  servlet:
-    session:
-      cookie:
-        name: AUTH_SERVER # 自定义 Session 的 Cookie 名字，防止冲突。冲突后，会导致 SSO 登录失败。
 
 #数据库连接配置
 spring:

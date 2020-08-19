@@ -1,8 +1,6 @@
 package org.junjie.security.app;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
-import org.junjie.security.core.properties.OAuth2ClientProperties;
 import org.junjie.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -21,7 +18,6 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
@@ -53,27 +49,24 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     @Autowired
     private TokenStore redisTokenStore;
-    @Bean
-    public TokenStore jdbcTokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         if (redisTokenStore == null) {
             log.error("token是空");
         }
         endpoints.authenticationManager(authenticationManager)
-                .tokenStore(jdbcTokenStore());
-//                .userDetailsService(userDetailsService);
-//        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
-//            TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-//            ArrayList<TokenEnhancer> enhancers = new ArrayList<>();
-//            enhancers.add(jwtTokenEnhancer);
-//            enhancers.add(jwtAccessTokenConverter);
-//            tokenEnhancerChain.setTokenEnhancers(enhancers);
-//            endpoints.tokenEnhancer(tokenEnhancerChain)
-//                    .accessTokenConverter(jwtAccessTokenConverter);
-//        }
+                .tokenStore(redisTokenStore)
+                .userDetailsService(userDetailsService);
+        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
+            TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+            ArrayList<TokenEnhancer> enhancers = new ArrayList<>();
+            enhancers.add(jwtTokenEnhancer);
+            enhancers.add(jwtAccessTokenConverter);
+            tokenEnhancerChain.setTokenEnhancers(enhancers);
+            endpoints.tokenEnhancer(tokenEnhancerChain)
+                    .accessTokenConverter(jwtAccessTokenConverter);
+        }
     }
 
 
@@ -98,9 +91,9 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        //使用jdbc,此方式新增加的client可以即时生效，inMemory默认不是即时生效
+        //1、使用jdbc,此方式新增加的client可以即时生效，
         clients.withClientDetails(jdbcClientDetailsService());
-        //使用内存
+        //2、使用内存的方式、新增的client不会即时生效
 //        InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
 //        if (ArrayUtils.isNotEmpty(securityProperties.getOauth2().getClients())) {
 //            for (OAuth2ClientProperties config : securityProperties.getOauth2().getClients()) {
