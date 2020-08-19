@@ -2,6 +2,7 @@ package com.junjie.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,14 @@ public class GlobalExceptionHandler {
     public String jsonErrorHandler(Exception e, HttpServletRequest httpServletRequest) {
         log.error("发生异常", e);
         return "服务打了个盹，请稍后再试";
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(value = AccessDeniedException.class)
+    @ResponseBody
+    public String jsonErrorHandler(AccessDeniedException e, HttpServletRequest httpServletRequest) {
+        log.error("权限拒绝:", e);
+        return e.getMessage();
     }
 
     /**

@@ -13,7 +13,7 @@ public class AppJwtTokenEnhancer implements TokenEnhancer {
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         //增加自定义信息
         Map<String, Object> info = new HashMap<>();
-        info.put("company", "imooc");//发出去的令牌中增加一个自定义字段
+        info.put("company", "kitedge");//发出去的令牌中增加一个自定义字段
         DefaultOAuth2AccessToken auth2AccessToken = (DefaultOAuth2AccessToken) accessToken;
         auth2AccessToken.setAdditionalInformation(info);
         return auth2AccessToken;

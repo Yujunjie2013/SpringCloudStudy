@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableHystrix
 @Aspect
 @SpringBootApplication(scanBasePackages = {"com.junjie"})
-@ComponentScan(basePackages = {"com.junjie"})
 @MapperScan(basePackages = {"com.junjie.order.dao"})
 public class OrderApplication {
     /**

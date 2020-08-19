@@ -3,6 +3,7 @@ package com.junjie.product.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider;
@@ -29,6 +30,18 @@ public class ExampleController {
     @GetMapping("/hello")
     public String hello() {
         return "world";
+    }
+
+    @GetMapping("/admin-list")
+    @PreAuthorize("hasRole('ADMIN')") // 要求管理员 ROLE_ADMIN 角色
+    public String adminList() {
+        return "管理员列表";
+    }
+
+    @GetMapping("/user-list")
+    @PreAuthorize("hasRole('USER')") // 要求普通用户 ROLE_USER 角色
+    public String userList() {
+        return "用户列表";
     }
 
 //    @PostMapping("/login")

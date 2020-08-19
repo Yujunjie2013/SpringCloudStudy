@@ -72,11 +72,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-        <!-- 实现对 Spring Security OAuth2 的自动配置 -->
-        <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-        </dependency>
+
         <!--excel操作-->
         <dependency>
             <groupId>cn.afterturn</groupId>
