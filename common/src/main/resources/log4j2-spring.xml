@@ -128,6 +128,9 @@
         <logger name="com.junjie.order.dao" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </logger>
+        <logger name="org.springframework.security" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
         <root level="info">
             <appender-ref ref="Console"/>
 <!--            <appender-ref ref="Filelog"/>-->

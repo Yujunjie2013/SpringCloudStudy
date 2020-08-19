@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
@@ -52,25 +53,27 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     @Autowired
     private TokenStore redisTokenStore;
-
+    @Bean
+    public TokenStore jdbcTokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         if (redisTokenStore == null) {
-            log.info("token是空");
+            log.error("token是空");
         }
         endpoints.authenticationManager(authenticationManager)
-                .tokenStore(redisTokenStore)
-                .userDetailsService(userDetailsService);
-        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
-            TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-            ArrayList<TokenEnhancer> enhancers = new ArrayList<>();
-            enhancers.add(jwtTokenEnhancer);
-            enhancers.add(jwtAccessTokenConverter);
-            tokenEnhancerChain.setTokenEnhancers(enhancers);
-
-            endpoints.tokenEnhancer(tokenEnhancerChain)
-                    .accessTokenConverter(jwtAccessTokenConverter);
-        }
+                .tokenStore(jdbcTokenStore());
+//                .userDetailsService(userDetailsService);
+//        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
+//            TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+//            ArrayList<TokenEnhancer> enhancers = new ArrayList<>();
+//            enhancers.add(jwtTokenEnhancer);
+//            enhancers.add(jwtAccessTokenConverter);
+//            tokenEnhancerChain.setTokenEnhancers(enhancers);
+//            endpoints.tokenEnhancer(tokenEnhancerChain)
+//                    .accessTokenConverter(jwtAccessTokenConverter);
+//        }
     }
 
 
@@ -79,7 +82,9 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
      */
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         //CheckTokenEndpoint
-//        security.tokenKeyAccess("permitAll()")
+//        security
+//                .allowFormAuthenticationForClients()
+//                .tokenKeyAccess("permitAll()")
 //                .checkTokenAccess("isAuthenticated()");
         security
                 .checkTokenAccess("isAuthenticated()");
@@ -103,9 +108,10 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
 //                        .withClient(config.getClientId())
 //                        .secret(passwordEncoder.encode(config.getClientSecret()))//这里一定要这样用
 //                        .accessTokenValiditySeconds(config.getAccessTokenValiditySeconds())//令牌有效期
-//                        .authorizedGrantTypes("refresh_token", "password")
+//                        .authorizedGrantTypes("refresh_token", "authorization_code", "password")
 //                        .refreshTokenValiditySeconds(2592000)//refreshToken的有效期
-//                        .scopes("all");
+//                        .scopes("all", "read_userinfo", "read_contacts")
+//                        .redirectUris("http://127.0.0.1:9001/login", "http://127.0.0.1:9090/callback");
 //            }
 //        }
     }

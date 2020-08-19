@@ -4,9 +4,9 @@
 package org.junjie.security.browser.session;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang.StringUtils;
-import org.junjie.security.core.support.SimpleResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.junjie.security.core.properties.SecurityProperties;
+import org.junjie.security.core.support.SimpleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

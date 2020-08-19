@@ -11,7 +11,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication(scanBasePackages = {"com.junjie"})
 @EntityScan("com.junjie.product.entity")
 @MapperScan(basePackages = {"com.junjie.*.dao"})
-@EnableOAuth2Sso //配置接入 SSO 功能，可以看看 SsoSecurityConfigurer 类。
 public class ProductApplication {
 
     public static void main(String[] args) {

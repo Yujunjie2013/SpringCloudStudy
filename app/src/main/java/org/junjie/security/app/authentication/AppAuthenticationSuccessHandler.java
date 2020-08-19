@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.collections.MapUtils;
-import org.junjie.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -41,31 +40,31 @@ public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         logger.info("登录成功");
+        super.onAuthenticationSuccess(request,response,authentication);
 
-        String header = request.getHeader("Authorization");
-        if (header == null || !header.startsWith("Basic ")) {
-            throw new UnapprovedClientAuthenticationException("请求头中无client信息");
-        }
-        String[] strings = extractAndDecodeHeader(header, request);
-        String clientId = strings[0];
-        String clientSecret = strings[1];
-
-        ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
-
-        if (clientDetails == null) {
-            throw new UnapprovedClientAuthenticationException("clientId对应的配置信息不存在:" + clientId);
-        } else if (!StringUtils.equals(clientDetails.getClientSecret(), clientSecret)) {
-            throw new UnapprovedClientAuthenticationException("clientSecret不匹配:" + clientSecret);
-        }
-
-        TokenRequest tokenRequest = new TokenRequest(MapUtils.EMPTY_MAP, clientId, clientDetails.getScope(), "custom");
-        OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
-
-        OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
-        OAuth2AccessToken accessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
-
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(accessToken));
+//        String header = request.getHeader("Authorization");
+//        if (header == null || !header.startsWith("Basic ")) {
+//            throw new UnapprovedClientAuthenticationException("请求头中无client信息");
+//        }
+//        String[] strings = extractAndDecodeHeader(header, request);
+//        String clientId = strings[0];
+//        String clientSecret = strings[1];
+//        ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+//
+//        if (clientDetails == null) {
+//            throw new UnapprovedClientAuthenticationException("clientId对应的配置信息不存在:" + clientId);
+//        } else if (!StringUtils.equals(clientDetails.getClientSecret(), clientSecret)) {
+//            throw new UnapprovedClientAuthenticationException("clientSecret不匹配:" + clientSecret);
+//        }
+//
+//        TokenRequest tokenRequest = new TokenRequest(MapUtils.EMPTY_MAP, clientId, clientDetails.getScope(), "custom");
+//        OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
+//
+//        OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
+//        OAuth2AccessToken accessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+//
+//        response.setContentType("application/json;charset=UTF-8");
+//        response.getWriter().write(objectMapper.writeValueAsString(accessToken));
     }
 
     private String[] extractAndDecodeHeader(String header, HttpServletRequest request) throws UnsupportedEncodingException {

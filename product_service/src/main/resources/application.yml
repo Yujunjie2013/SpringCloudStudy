@@ -3,7 +3,7 @@ server:
   servlet:
     session:
       cookie:
-        name: PRODUCT_ID # 自定义 Session 的 Cookie 名字，防止冲突。冲突后，会导致 SSO 登录失败。
+        name: PRODUCT_ID # 自定义 Session 的 Cookie 名字，防止冲突。冲突后，会导致 SSO 登录失败,造成无限重定向到登录页面
   tomcat:
     max-threads: 200
 

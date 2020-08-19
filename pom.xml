@@ -17,7 +17,7 @@
         <module>api_zuul_server</module>
         <module>api_gateway_server</module>
         <module>core</module>
-        <module>browser</module>
+<!--        <module>browser</module>-->
         <module>app</module>
         <module>auth-server</module>
     </modules>
