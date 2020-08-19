@@ -18,8 +18,8 @@ public class MyTask {
     }
 
 
-    @Async
-    @Scheduled(cron = "0/60 * * * * ? ")
+//    @Async
+//    @Scheduled(cron = "0/60 * * * * ? ")
     public void bathReleaseMeetingInfo() {
         log.info("bathReleaseMeetingInfo >> 基础释放 job开始");
     }
