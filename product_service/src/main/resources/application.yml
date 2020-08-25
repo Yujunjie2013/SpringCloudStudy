@@ -11,7 +11,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: service-product
+    name: product-server
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
@@ -52,7 +52,8 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/
+#      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/ 多节点
+      defaultZone: http://localhost:9000/eureka/
   instance:
     #    向注册中心注册服务ID，这里的服务ID写成当前服务的IP和端口号
     instance-id: ${spring.cloud.client.ip-address}:${server.port}

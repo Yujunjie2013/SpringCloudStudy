@@ -8,7 +8,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: service-order
+    name: order-server
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
