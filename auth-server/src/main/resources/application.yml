@@ -1,8 +1,17 @@
 
+server:
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        name: AUTH_SSO # 自定义 Session 的 Cookie 名字，防止冲突。冲突后，会导致 SSO 登录失败,造成无限重定向到登录页面
 #数据库连接配置
 spring:
+  application:
+    name: auth-server
   redis:
     host: 127.0.0.1
+    port: 6379
   session:
     #    指定session的存储类型为redis
     store-type: redis
@@ -11,6 +20,46 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/security_demo?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
     username: root
     password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 8
+      min-idle: 8
+      max-active: 32
+      max-wait: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 600000
+      max-evictable-idle-time-millis: 900000
+      keep-alive: true
+      phy-max-use-count: 100000
+      filter:
+        stat:
+          connection-stack-trace-enable: true
+          slow-sql-millis: 1000
+          log-slow-sql: true
+          merge-sql: true
+        #        # 通过connectProperties属性来打开mergeSql功能，慢SQL记录
+        #        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        slf4j:
+          enabled: true
+          #          statement-create-after-log-enabled: false
+          #          statement-close-after-log-enabled: false
+          #          result-set-open-after-log-enabled: false
+          #          result-set-close-after-log-enabled: false
+          statement-log-enabled: true
+      time-between-log-stats-millis: 300000
+
+#配置eureka注册中心地址
+eureka:
+  client:
+    service-url:
+#      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/ 多节点模式
+      defaultZone: http://localhost:9000/eureka/
+  instance:
+    #    向注册中心注册服务ID，这里的服务ID写成当前服务的IP和端口号
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    health-check-url-path: /actuator/health
+    lease-renewal-interval-in-seconds: 5  #默认心跳时间是30，为了方便测试，这里改成5
+    lease-expiration-duration-in-seconds: 15 #续约到期时间，多长时间没有心跳，剔除该服务(默认是90 )
 
 mybatis-plus:
   global-config:
@@ -38,3 +87,4 @@ org:
         - clientId: clientapp
           clientSecret: 112233
           accessTokenValiditySeconds: 3600
+
