@@ -17,7 +17,7 @@
         <module>api_zuul_server</module>
         <module>api_gateway_server</module>
         <module>core</module>
-<!--        <module>browser</module>-->
+        <!--        <module>browser</module>-->
         <module>app</module>
         <module>auth-server</module>
     </modules>
@@ -35,19 +35,14 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
+            <exclusions><!-- 去掉springboot日志默认配置,logback -->
                 <exclusion>
-                    <artifactId>objenesis</artifactId>
-                    <groupId>org.objenesis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-boot-starter-logging</artifactId>
                     <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

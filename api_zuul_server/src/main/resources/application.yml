@@ -7,21 +7,25 @@ spring:
 
 zuul:
   routes:
-    #    product: #这个可以随便写
+    #    product-server: #这个可以随便写
     #      path: /product-service/**
     #      #通过url的方式可以不用走注册中心
-    #      #      url: http://127.0.0.1:9001  #映射路径对应的实际微服务url地址,列如访问http://localhost:8080/product-service/product/1就能正常访问商品服务
+    #      #      url: http://127.0.0.1:9001  #映射路径对应的实际微服务url地址,
+    #       列如访问http://localhost:8080/product-service/product/1就能正常访问商品服务
     #      #通过服务id的方式就可以通过注册中心获取对应服务id的url，可以避免url频繁变更修改
-    #      service-id: service-product #这个表示需要路由到的服务id，这里一定要写真实的
+    #      service-id: product-service #这个表示需要路由到的服务id，这里一定要写真实的
     #    以上的两种方式还可以使用下面的方式将会简化，直接通过服务id：路径
-    service-product: /product-service/**
-    service-order: /service-order/**
+    product-server: /product-server/**
+    #      service-id: product-server
+    order-server: /order-server/**
+    auth-server: /auth-server/**
 
 
 #配置eureka注册中心地址
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/
+#      defaultZone: http://localhost:9000/eureka/,http://localhost:8000/eureka/ 多节点模式
+      defaultZone: http://localhost:9000/eureka/
   instance:
     prefer-ip-address: true #使用IP地址注册

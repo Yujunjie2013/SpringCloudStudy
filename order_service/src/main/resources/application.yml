@@ -92,8 +92,8 @@ security:
       client-id: clientapp
       client-secret: 112233
       # 访问令牌获取 URL，自定义的
-      access-token-uri: http://127.0.0.1:8080/oauth/token # 获取访问令牌的地址
-      user-authorization-uri: http://127.0.0.1:8080/oauth/authorize # 获取用户的授权码地址
+      access-token-uri: http://127.0.0.1:8090/oauth/token # 获取访问令牌的地址
+      user-authorization-uri: http://127.0.0.1:8090/oauth/authorize # 获取用户的授权码地址
     # OAuth2 Resource 配置，对应 ResourceServerProperties 类
     resource:
-      token-info-uri: http://127.0.0.1:8080/oauth/check_token # 校验访问令牌是否有效的地址
+      token-info-uri: http://127.0.0.1:8090/oauth/check_token # 校验访问令牌是否有效的地址

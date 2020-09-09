@@ -75,11 +75,9 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
      */
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         //CheckTokenEndpoint
-//        security
-//                .allowFormAuthenticationForClients()
-//                .tokenKeyAccess("permitAll()")
-//                .checkTokenAccess("isAuthenticated()");
         security
+                .allowFormAuthenticationForClients()
+                .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
     }
 

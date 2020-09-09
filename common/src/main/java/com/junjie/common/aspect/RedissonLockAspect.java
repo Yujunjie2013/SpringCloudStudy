@@ -1,14 +1,13 @@
 package com.junjie.common.aspect;
 
 import com.junjie.common.annotation.RedisLock;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.annotation.Order;
 import org.springframework.expression.EvaluationContext;
@@ -24,11 +23,15 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 @Order(1)//该order必须设置，很关键
+@Slf4j
 public class RedissonLockAspect {
     private ExpressionParser parser = new SpelExpressionParser();
     private LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
+//    /**
+//     * 用于获取方法参数定义名字.
+//     */
+//    private DefaultParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
 
-    private Logger log = LoggerFactory.getLogger(getClass());
     @Resource
     private Redisson redisson;
 
