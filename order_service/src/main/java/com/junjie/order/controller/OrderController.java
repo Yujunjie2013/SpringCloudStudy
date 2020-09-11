@@ -1,6 +1,6 @@
 package com.junjie.order.controller;
 
-import com.junjie.common.bean.BaseResponseBody;
+import com.junjie.common.bean.Result;
 import com.junjie.order.entity.TbOrder;
 import com.junjie.order.feign.ProductFeignClient;
 import com.junjie.order.service.ITbOrderService;
@@ -24,9 +24,9 @@ public class OrderController {
 
 
     @PostMapping("/add")
-    public BaseResponseBody addOrder(@RequestBody TbOrder tbOrder) {
+    public Result addOrder(@RequestBody TbOrder tbOrder) {
         boolean save = iTbOrderService.save(tbOrder);
-        return save ? BaseResponseBody.success(tbOrder) : BaseResponseBody.failure();
+        return save ? Result.succeed(tbOrder) : Result.failed();
     }
 
     //    通过restTemplateribbon方式调用,结合Hystrix

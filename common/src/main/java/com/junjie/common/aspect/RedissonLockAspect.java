@@ -1,6 +1,7 @@
 package com.junjie.common.aspect;
 
 import com.junjie.common.annotation.RedisLock;
+import com.junjie.common.exception.LockException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -61,15 +62,14 @@ public class RedissonLockAspect {
         }
         try {
             if (res) {
-                log.info("取到锁成功:" + rLock.getName());
+//                log.info("取到锁成功:" + rLock.getName());
                 return joinPoint.proceed();
             } else {
-                log.info("----------nono----------");
-                throw new RuntimeException("没有获得锁");
+                throw new LockException("锁等待超时");
             }
         } finally {
             rLock.unlock();
-            log.info("释放锁");
+//            log.info("释放锁");
         }
     }
 

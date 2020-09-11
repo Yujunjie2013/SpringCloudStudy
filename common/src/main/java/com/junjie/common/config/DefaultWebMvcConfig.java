@@ -1,6 +1,7 @@
 package com.junjie.common.config;
 
 import com.junjie.common.feign.UserService;
+import com.junjie.common.resolver.ClientArgumentResolver;
 import com.junjie.common.resolver.TokenArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -27,6 +28,6 @@ public class DefaultWebMvcConfig implements WebMvcConfigurer {
         //注入用户信息
         argumentResolvers.add(new TokenArgumentResolver(userService));
 //        //注入应用信息
-//        argumentResolvers.add(new ClientArgumentResolver());
+        argumentResolvers.add(new ClientArgumentResolver());
     }
 }

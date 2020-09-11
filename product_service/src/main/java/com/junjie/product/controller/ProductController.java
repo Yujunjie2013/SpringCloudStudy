@@ -1,7 +1,7 @@
 package com.junjie.product.controller;
 
 import com.junjie.common.annotation.RequestLimit;
-import com.junjie.common.bean.BaseResponseBody;
+import com.junjie.common.bean.Result;
 import com.junjie.product.entity.OperationLog;
 import com.junjie.product.utils.ExcelUtils;
 import com.junjie.product.entity.TbProduct;
@@ -33,15 +33,15 @@ public class ProductController {
     private String address;
 
     @GetMapping("/{id}")
-    public BaseResponseBody findById(@PathVariable Long id) {
+    public Result findById(@PathVariable Long id) {
         TbProduct tbProduct = iProductService.findById(id);
         log.info("查询数据:{}",tbProduct.toString());
-        return BaseResponseBody.success(tbProduct);
+        return Result.succeed(tbProduct);
     }
 
     @GetMapping("/list")
-    public BaseResponseBody<List<TbProduct>> getAll() {
-        return BaseResponseBody.success(iProductService.list());
+    public Result<List<TbProduct>> getAll() {
+        return Result.succeed(iProductService.list());
     }
 
     @PostMapping("/add")
