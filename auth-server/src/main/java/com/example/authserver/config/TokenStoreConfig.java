@@ -1,6 +1,6 @@
-package org.junjie.security.app;
+package com.example.authserver.config;
 
-import org.junjie.security.app.jwt.AppJwtTokenEnhancer;
+import com.example.authserver.jwt.AppJwtTokenEnhancer;
 import org.junjie.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

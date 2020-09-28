@@ -18,7 +18,7 @@
         <module>api_gateway_server</module>
         <module>core</module>
         <!--        <module>browser</module>-->
-        <module>app</module>
+<!--        <module>app</module>-->
         <module>auth-server</module>
     </modules>
 

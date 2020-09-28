@@ -21,17 +21,9 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public String jsonErrorHandler(Exception e, HttpServletRequest httpServletRequest) {
+    public Result jsonErrorHandler(Exception e, HttpServletRequest httpServletRequest) {
         log.error("发生异常", e);
-        return "服务打了个盹，请稍后再试";
-    }
-
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(value = AccessDeniedException.class)
-    @ResponseBody
-    public String jsonErrorHandler(AccessDeniedException e, HttpServletRequest httpServletRequest) {
-        log.error("权限拒绝:", e);
-        return e.getMessage();
+        return Result.failed("服务打了个盹，请稍后再试");
     }
 
     /**
@@ -43,9 +35,9 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = RequestLimitException.class)
     @ResponseBody
-    public String invalidErrorHandler(RequestLimitException e, HttpServletRequest httpServletRequest) {
+    public Result invalidErrorHandler(RequestLimitException e, HttpServletRequest httpServletRequest) {
         log.error("限流异常", e);
-        return e.getMessage();
+        return Result.failed(e.getMessage());
     }
 
     /**
@@ -56,6 +48,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({AccessDeniedException.class})
     @ResponseBody
     public Result badMethodExpressException(AccessDeniedException e) {
+        log.error("badMethodExpressException", e);
         return defHandler("没有权限请求当前方法", e);
     }
 
@@ -100,18 +93,6 @@ public class GlobalExceptionHandler {
     public Result handleException(BusinessException e) {
         return defHandler("业务异常", e);
     }
-
-    /**
-     * 所有异常统一处理
-     * 返回状态码:500
-     */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public Result handleException(Exception e) {
-        return defHandler("未知异常", e);
-    }
-
 
     private Result defHandler(String msg, Exception e) {
         log.error(msg, e);

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
-@SpringBootApplication(scanBasePackages = {"com.junjie.common","org.junjie.security.*", "com.example.authserver"})
+@SpringBootApplication(scanBasePackages = {"com.example.authserver", "com.junjie.common", "org.junjie.security.*"})
 public class AuthServerApplication {
 
     public static void main(String[] args) {
