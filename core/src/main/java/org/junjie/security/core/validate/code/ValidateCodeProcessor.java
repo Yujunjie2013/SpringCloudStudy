@@ -26,4 +26,13 @@ public interface ValidateCodeProcessor {
      * @throws Exception
      */
     void validate(ServletWebRequest servletWebRequest);
+
+    /**
+     * 校验验证码
+     *
+     * @param deviceId deviceId
+     * @param code 请求的验证码
+     * @param codeType 验证码类型
+     */
+    void validate(String deviceId, String code, ValidateCodeType codeType);
 }

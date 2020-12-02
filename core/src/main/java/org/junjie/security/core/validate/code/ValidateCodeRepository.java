@@ -26,11 +26,20 @@ public interface ValidateCodeRepository {
     ValidateCode get(ServletWebRequest request, ValidateCodeType validateCodeType);
 
     /**
+     * 获取验证码
+     *
+     * @param deviceId         deviceId
+     * @param validateCodeType 类型
+     * @return
+     */
+    ValidateCode get(String deviceId, ValidateCodeType validateCodeType);
+
+    /**
      * 移除验证码
      *
-     * @param request
+     * @param deviceId
      * @param codeType
      */
-    void remove(ServletWebRequest request, ValidateCodeType codeType);
+    void remove(String deviceId, ValidateCodeType codeType);
 
 }

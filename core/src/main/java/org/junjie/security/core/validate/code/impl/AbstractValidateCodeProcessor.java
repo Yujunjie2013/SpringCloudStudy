@@ -73,9 +73,8 @@ public abstract class AbstractValidateCodeProcessor<V extends ValidateCode> impl
     @Override
     public void validate(ServletWebRequest servletWebRequest) {
         ValidateCodeType codeType = getValidateCodeType();
-        String sessionKey = getSessionKey();
-        V codeInSession = (V) validateCodeRepository.get(servletWebRequest, codeType);
-//        V codeInSession = (V) sessionStrategy.getAttribute(servletWebRequest, sessionKey);
+        String deviceId = servletWebRequest.getHeader("deviceId");
+        V codeInRepository = (V) validateCodeRepository.get(deviceId, codeType);
 
         String codeInRequest;
         try {
@@ -85,24 +84,34 @@ public abstract class AbstractValidateCodeProcessor<V extends ValidateCode> impl
             throw new ValidateCodeException("获取验证码的值失败");
         }
 
+        check(deviceId, codeType, codeInRepository, codeInRequest);
+
+    }
+
+    @Override
+    public void validate(String deviceId, String code, ValidateCodeType codeType) {
+        V codeInRepository = (V) validateCodeRepository.get(deviceId, codeType);
+        check(deviceId, codeType, codeInRepository, code);
+    }
+
+    private void check(String deviceId, ValidateCodeType codeType, V codeInRepository, String codeInRequest) {
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException(codeType + "验证码的值不能为空");
         }
 
-        if (codeInSession == null) {
+        if (codeInRepository == null) {
             throw new ValidateCodeException(codeType + "验证码不存在");
         }
 
-        if (codeInSession.isExpried()) {
-            validateCodeRepository.remove(servletWebRequest, codeType);
+        if (codeInRepository.isExpried()) {
+            validateCodeRepository.remove(deviceId, codeType);
             throw new ValidateCodeException(codeType + "验证码已过期");
         }
 
-        if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
+        if (!StringUtils.equals(codeInRepository.getCode(), codeInRequest)) {
             throw new ValidateCodeException(codeType + "验证码不匹配");
         }
-
-        validateCodeRepository.remove(servletWebRequest, codeType);
+        validateCodeRepository.remove(deviceId, codeType);
     }
 
     /**

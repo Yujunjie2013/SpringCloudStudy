@@ -22,8 +22,8 @@ import javax.annotation.Resource;
 import java.lang.reflect.Method;
 
 @Aspect
-@Component
-@Order(1)//该order必须设置，很关键
+//@Component
+//@Order(1)//该order必须设置，很关键
 @Slf4j
 public class RedissonLockAspect {
     private ExpressionParser parser = new SpelExpressionParser();

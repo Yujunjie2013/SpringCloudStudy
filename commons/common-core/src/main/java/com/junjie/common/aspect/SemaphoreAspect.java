@@ -2,6 +2,7 @@ package com.junjie.common.aspect;
 
 import com.junjie.common.annotation.RequestLimit;
 import com.junjie.common.exception.RequestLimitException;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -13,8 +14,9 @@ import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
-@Component
+//@Component
 @Aspect
+@Slf4j
 public class SemaphoreAspect {
 
     private ConcurrentHashMap<String, Semaphore> semaphoreMap = new ConcurrentHashMap<>();

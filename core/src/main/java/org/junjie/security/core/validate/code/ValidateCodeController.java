@@ -21,7 +21,7 @@ public class ValidateCodeController {
 
     /**
      * 创建验证码，根据验证码类型不同，调用不同的{@link ValidateCodeProcessor}接口实现
-     *
+     * type 目前只能是sms/image两种类型
      * @param request
      * @param response
      */

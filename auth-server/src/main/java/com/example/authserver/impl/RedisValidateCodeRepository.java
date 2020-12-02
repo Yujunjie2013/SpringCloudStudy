@@ -32,9 +32,17 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
         return (ValidateCode) value;
     }
 
+    public ValidateCode get(String deviceId, ValidateCodeType validateCodeType) {
+        Object value = redisTemplate.opsForValue().get(generaterKey(deviceId, validateCodeType));
+        if (validateCodeType == null) {
+            return null;
+        }
+        return (ValidateCode) value;
+    }
+
     @Override
-    public void remove(ServletWebRequest request, ValidateCodeType codeType) {
-        redisTemplate.delete(buildKey(request, codeType));
+    public void remove(String deviceId, ValidateCodeType codeType) {
+        redisTemplate.delete(generaterKey(deviceId, codeType));
     }
 
     /**
@@ -44,6 +52,10 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
      */
     private String buildKey(ServletWebRequest request, ValidateCodeType type) {
         String deviceId = request.getHeader("deviceId");
+        return generaterKey(deviceId, type);
+    }
+
+    private String generaterKey(String deviceId, ValidateCodeType type) {
         if (StringUtils.isBlank(deviceId)) {
             throw new ValidateCodeException("请在请求头中携带deviceId参数");
         }

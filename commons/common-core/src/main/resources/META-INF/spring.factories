@@ -1,0 +1,8 @@
+#org.springframework.context.ApplicationContextInitializer=\
+#com.central.common.config.BannerInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.junjie.common.feign.fallback.UserServiceFallbackFactory,\
+com.junjie.common.aspect.RedissonLockAspect,\
+com.junjie.common.aspect.SemaphoreAspect,\
+com.junjie.common.aspect.AuditLogAspect

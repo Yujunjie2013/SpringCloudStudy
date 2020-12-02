@@ -13,13 +13,13 @@
         <module>order_service</module>
         <module>entity</module>
         <module>eureka_server</module>
-        <module>common</module>
         <module>api_zuul_server</module>
         <module>api_gateway_server</module>
         <module>core</module>
         <!--        <module>browser</module>-->
 <!--        <module>app</module>-->
         <module>auth-server</module>
+        <module>commons</module>
     </modules>
 
     <parent>
