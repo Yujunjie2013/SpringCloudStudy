@@ -13,6 +13,10 @@
     <artifactId>commons</artifactId>
     <modules>
         <module>common-core</module>
+        <module>my-db-spring-boot-starter</module>
+        <module>my-redis-spring-boot-starter</module>
+        <module>my-common-spring-boot-starter</module>
+        <module>my-ribbon-spring-boot-starter</module>
     </modules>
 
 
