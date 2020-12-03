@@ -1,7 +1,8 @@
-package com.junjie.common.config.mybatis;
+package com.central.db.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.central.db.mapper.IBaseMapper;
 
 /**
  * 基类service，默认实现自定义mapper中的方法

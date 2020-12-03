@@ -1,4 +1,4 @@
-//package com.junjie.common.config.mybatis.method;
+//package com.central.db.config.mybatis.method;
 //
 //import com.baomidou.mybatisplus.core.enums.SqlMethod;
 //import com.baomidou.mybatisplus.core.injector.AbstractMethod;

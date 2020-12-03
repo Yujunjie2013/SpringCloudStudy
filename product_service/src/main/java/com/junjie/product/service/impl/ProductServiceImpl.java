@@ -1,8 +1,8 @@
 package com.junjie.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.central.db.service.BaseServiceImpl;
 import com.junjie.common.annotation.RedisLock;
-import com.junjie.common.config.mybatis.BaseServiceImpl;
 import com.junjie.product.dao.IProductDao;
 import com.junjie.product.entity.TbProduct;
 import com.junjie.product.service.IProductService;

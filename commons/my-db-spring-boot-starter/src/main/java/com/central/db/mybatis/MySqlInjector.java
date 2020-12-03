@@ -1,8 +1,8 @@
-package com.junjie.common.config.mybatis;
+package com.central.db.mybatis;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
-import com.junjie.common.config.mybatis.method.*;
+import com.central.db.mybatis.method.SelectOneLimit;
 
 import java.util.List;
 

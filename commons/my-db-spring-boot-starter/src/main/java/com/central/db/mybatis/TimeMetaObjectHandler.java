@@ -1,9 +1,9 @@
-package com.junjie.common.config.mybatis;
+package com.central.db.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.central.db.properties.MybatisPlusAutoFillProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -13,10 +13,13 @@ import java.time.LocalDateTime;
  *
  * @author yujunjie
  */
-@Component
 @Slf4j
 public class TimeMetaObjectHandler implements MetaObjectHandler {
+    private MybatisPlusAutoFillProperties autoFillProperties;
 
+    public TimeMetaObjectHandler(MybatisPlusAutoFillProperties autoFillProperties) {
+        this.autoFillProperties = autoFillProperties;
+    }
 
     /**
      * 插入填充
@@ -27,6 +30,16 @@ public class TimeMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
         this.strictInsertFill(metaObject, "create_time", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+    }
+
+    @Override
+    public boolean openInsertFill() {
+        return autoFillProperties.getEnableInsertFill();
+    }
+
+    @Override
+    public boolean openUpdateFill() {
+        return autoFillProperties.getEnableUpdateFill();
     }
 
     /**

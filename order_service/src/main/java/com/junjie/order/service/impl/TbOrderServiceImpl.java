@@ -1,6 +1,6 @@
 package com.junjie.order.service.impl;
 
-import com.junjie.common.config.mybatis.BaseServiceImpl;
+import com.central.db.service.BaseServiceImpl;
 import com.junjie.order.dao.ITbOrderMapper;
 import com.junjie.order.entity.TbOrder;
 import com.junjie.order.service.ITbOrderService;

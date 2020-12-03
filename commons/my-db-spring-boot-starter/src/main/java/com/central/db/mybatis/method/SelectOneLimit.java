@@ -1,4 +1,4 @@
-package com.junjie.common.config.mybatis.method;
+package com.central.db.mybatis.method;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;

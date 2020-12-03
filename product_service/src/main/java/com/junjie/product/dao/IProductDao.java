@@ -1,6 +1,6 @@
 package com.junjie.product.dao;
 
-import com.junjie.common.config.mybatis.IBaseMapper;
+import com.central.db.mapper.IBaseMapper;
 import com.junjie.product.entity.TbProduct;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

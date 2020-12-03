@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.central.db.config.TenantAutoConfigure,\
+com.central.db.config.MasterDataSourceConfig,\
+com.central.db.config.MybatisPlusConfig

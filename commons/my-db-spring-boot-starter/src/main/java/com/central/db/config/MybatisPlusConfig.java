@@ -1,15 +1,14 @@
-package com.junjie.common.config.mybatis;
+package com.central.db.config;
 
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import com.central.db.mybatis.MySqlInjector;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author yujunjie
  */
-@Configuration
 public class MybatisPlusConfig {
 
     /**
