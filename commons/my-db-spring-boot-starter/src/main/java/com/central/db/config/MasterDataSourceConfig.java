@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.central.db.mybatis.MySqlInjector;
 import com.central.db.mybatis.TimeMetaObjectHandler;
 import com.central.db.properties.MybatisPlusAutoFillProperties;
-import com.junjie.common.config.SqlCostInterceptor;
+import com.central.db.mybatis.SqlCostInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;

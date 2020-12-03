@@ -2,39 +2,31 @@ package com.junjie.common.aspect;
 
 import com.junjie.common.annotation.RedisLock;
 import com.junjie.common.exception.LockException;
+import com.junjie.common.lock.DistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.redisson.Redisson;
-import org.redisson.api.RLock;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
-import org.springframework.core.annotation.Order;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
 
 @Aspect
-//@Component
 //@Order(1)//该order必须设置，很关键
 @Slf4j
 public class RedissonLockAspect {
-    private ExpressionParser parser = new SpelExpressionParser();
-    private LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
-//    /**
-//     * 用于获取方法参数定义名字.
-//     */
-//    private DefaultParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
+    private final ExpressionParser parser = new SpelExpressionParser();
+    private final LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
 
     @Resource
-    private Redisson redisson;
+    private DistributedLock distributedLock;
 
     @Around("@annotation(redissonLock)")
     public Object around(ProceedingJoinPoint joinPoint, RedisLock redissonLock) throws Throwable {
@@ -52,13 +44,12 @@ public class RedissonLockAspect {
         }
         log.info("redis锁:" + key);
 
-        RLock rLock = redisson.getLock(key);
         boolean res;
         if (redissonLock.leaseTime() == -1) {
             //无论锁多久都不会不自动释放
-            res = rLock.tryLock(redissonLock.waitTime(), redissonLock.timeUnit());
+            res = distributedLock.tryLock(key, redissonLock.waitTime(), redissonLock.timeUnit(), false);
         } else {
-            res = rLock.tryLock(redissonLock.waitTime(), redissonLock.leaseTime(), redissonLock.timeUnit());
+            res = distributedLock.tryLock(key, redissonLock.waitTime(), redissonLock.leaseTime(), redissonLock.timeUnit(), false);
         }
         try {
             if (res) {
@@ -68,7 +59,7 @@ public class RedissonLockAspect {
                 throw new LockException("锁等待超时");
             }
         } finally {
-            rLock.unlock();
+            distributedLock.unlock();
 //            log.info("释放锁");
         }
     }

@@ -35,4 +35,11 @@ public @interface RedisLock {
      */
     TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
 
+    /**
+     * 是否使用公平锁
+     *
+     * @return
+     */
+    boolean isFair() default false;
+
 }
