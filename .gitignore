@@ -31,3 +31,5 @@
 /logs/junjie/product/info.log
 /logs/junjie/product/warn.log
 /logs/*
+/commons/common-core/target/
+/commons/commons.iml

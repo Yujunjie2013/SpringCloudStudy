@@ -17,6 +17,7 @@
         <module>my-redis-spring-boot-starter</module>
         <module>my-common-spring-boot-starter</module>
         <module>my-ribbon-spring-boot-starter</module>
+        <module>my-auth-client-spring-boot-starter</module>
     </modules>
 
 
