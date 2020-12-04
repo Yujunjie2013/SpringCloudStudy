@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Component
 public class CoreAuthorizaConfigManager implements AuthorizeConfigManager {
     @Autowired
     private Set<AuthorizeConfigProvider> authorizeConfigProviders;

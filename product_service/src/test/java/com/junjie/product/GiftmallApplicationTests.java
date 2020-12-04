@@ -1,5 +1,6 @@
 package com.junjie.product;
 
+import com.central.redis.template.RedisRepository;
 import com.junjie.common.bean.TestCharVarcharText;
 import com.junjie.product.service.IProductService;
 import org.junit.Test;
@@ -58,15 +59,15 @@ public class GiftmallApplicationTests {
     }
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisRepository redisRepository;
 
     @Test
     public void testRedis() {
-        redisTemplate.opsForSet().add("hello","哈哈哈哈");
+        redisRepository.set("hello", "哈哈哈哈");
     }
 
     @Test
-    public void insertTEST(){
+    public void insertTEST() {
         TestCharVarcharText testCharVarcharText = new TestCharVarcharText();
         testCharVarcharText.setMychar("mychar1");
         testCharVarcharText.setMyvarchar("myvarchar1");

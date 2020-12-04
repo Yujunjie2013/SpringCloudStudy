@@ -1,0 +1,7 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.junjie.security.core.SecurityCoreConfig,\
+org.junjie.security.core.validate.code.ValidateCodeSecurityConfig,\
+org.junjie.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig,\
+org.junjie.security.core.validate.code.ValidateCodeProcessorHolder,\
+org.junjie.security.core.validate.code.ValidateCodeFilter,\
+org.junjie.security.core.validate.code.ValidateCodeController

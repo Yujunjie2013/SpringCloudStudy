@@ -31,7 +31,7 @@ public class OpenIdGranter extends AbstractTokenGranter {
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
         String openId = parameters.get("openId");
 
-        Authentication userAuth = new OpenIdAuthenticationToken(openId);
+        Authentication userAuth = new OpenIdAuthenticationToken(openId, "");
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
         userAuth = authenticationManager.authenticate(userAuth);
         if (userAuth == null || !userAuth.isAuthenticated()) {

@@ -70,7 +70,19 @@ public class RedisRepository {
      * @param time  过期时间(单位秒)
      */
     public void setExpire(final String key, final Object value, final long time) {
-        redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+        setExpire(key, value, time, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 添加到带有 过期时间的  缓存
+     *
+     * @param key      redis主键
+     * @param value    值
+     * @param time     过期时间
+     * @param timeUnit 时间单位
+     */
+    public void setExpire(final String key, final Object value, final long time, TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value, time, timeUnit);
     }
 
     /**
@@ -229,6 +241,9 @@ public class RedisRepository {
      * @return the boolean
      */
     public boolean exists(final String key) {
+        if (key == null || key.equalsIgnoreCase("")) {
+            return false;
+        }
         return redisTemplate.hasKey(key);
     }
 

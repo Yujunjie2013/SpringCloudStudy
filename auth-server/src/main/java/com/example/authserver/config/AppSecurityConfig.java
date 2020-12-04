@@ -1,16 +1,12 @@
 package com.example.authserver.config;
 
 import com.example.authserver.authentication.openid.OpenIdAuthenticationSecurityConfig;
-import org.junjie.security.core.SecurityCoreConfig;
 import org.junjie.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import org.junjie.security.core.authorize.AuthorizeConfigManager;
 import org.junjie.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -28,7 +24,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
 
     @Autowired
     protected AuthenticationSuccessHandler authenticationSuccessHandler;

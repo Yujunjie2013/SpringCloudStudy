@@ -1,5 +1,6 @@
 package com.example.authserver.impl;
 
+import com.central.redis.template.RedisRepository;
 import com.example.authserver.exception.AppSecretException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,26 +14,25 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AppSignUpUtils {
     @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
-    @Autowired
-    private UsersConnectionRepository usersConnectionRepository;
-    @Autowired
-    private ConnectionFactoryLocator connectionFactoryLocator;
+    private RedisRepository redisRepository;
 
     public void saveConnectionData(WebRequest request, ConnectionData connectionData) {
-        redisTemplate.opsForValue().set(getKey(request), connectionData, 10, TimeUnit.MINUTES);
+//        redisTemplate.opsForValue().set(getKey(request), connectionData, 10, TimeUnit.MINUTES);
+        redisRepository.setExpire(getKey(request), connectionData, 10, TimeUnit.MINUTES);
     }
 
     public void doPostSignUp(WebRequest request, String userId) {
         String key = getKey(request);
-        if (!redisTemplate.hasKey(key)) {
+//        if (!redisTemplate.hasKey(key)) {
+        if (!redisRepository.exists(key)) {
             throw new AppSecretException("无法找到缓存的用户社交账号信息");
         }
-        ConnectionData connectionData = (ConnectionData) redisTemplate.opsForValue().get(key);
-        ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId());
-        Connection<?> connection = connectionFactory.createConnection(connectionData);
-        usersConnectionRepository.createConnectionRepository(userId).addConnection(connection);
-        redisTemplate.delete(key);
+        redisRepository.del(key);
+//        ConnectionData connectionData = (ConnectionData) redisTemplate.opsForValue().get(key);
+//        ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId());
+//        Connection<?> connection = connectionFactory.createConnection(connectionData);
+//        usersConnectionRepository.createConnectionRepository(userId).addConnection(connection);
+//        redisTemplate.delete(key);
     }
 
 

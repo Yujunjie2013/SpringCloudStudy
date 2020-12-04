@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -28,6 +29,7 @@ import java.time.LocalDateTime;
 @Slf4j
 @Aspect
 @ConditionalOnClass({HttpServletRequest.class, RequestContextHolder.class})
+@EnableConfigurationProperties(AuditLogProperties.class)
 public class AuditLogAspect {
     @Value("${spring.application.name}")
     private String applicationName;

@@ -1,8 +1,11 @@
 package org.junjie.security.core.properties;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ValidateCodeProperties {
     /**
      * 图形验证码

@@ -1,8 +1,11 @@
 package org.junjie.security.core.properties;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class SmsCodeProperties {
     private int length=6;//验证码长度
     private int expireIn = 60;//验证码默认有效期

@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@Component
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
     //失败处理器
     @Autowired

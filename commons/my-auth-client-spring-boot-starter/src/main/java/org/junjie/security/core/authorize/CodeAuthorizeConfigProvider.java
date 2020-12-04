@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
 @Order(Integer.MIN_VALUE)
 public class CodeAuthorizeConfigProvider implements AuthorizeConfigProvider {

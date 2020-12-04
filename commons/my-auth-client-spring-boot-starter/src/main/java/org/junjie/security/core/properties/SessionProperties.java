@@ -1,8 +1,11 @@
 package org.junjie.security.core.properties;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class SessionProperties {
     /**
      * 同一个用户在系统中的最大session数，默认1
