@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * 图形验证码处理器
  */
-@Component("imageValidateCodeProcessor")
+//@Component("imageValidateCodeProcessor")
 public class ImageValidateCodeProcessor extends AbstractValidateCodeProcessor<ImageCode> {
     /**
      * 发送图形验证码，将其写到响应中

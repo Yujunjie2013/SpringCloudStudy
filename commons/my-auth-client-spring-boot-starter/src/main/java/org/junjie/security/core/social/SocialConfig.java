@@ -26,7 +26,7 @@ import org.springframework.util.Assert;
 import javax.sql.DataSource;
 
 @EnableSocial
-@Configuration
+//@Configuration
 public class SocialConfig extends SocialConfigurerAdapter {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired

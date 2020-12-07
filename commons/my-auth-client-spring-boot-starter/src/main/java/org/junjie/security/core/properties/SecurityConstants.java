@@ -77,5 +77,12 @@ public interface SecurityConstants {
      *验证码生成器(包含短信、图片)，smsCodeGenerator/imageCodeGenerator
      */
     String CODE_GENERATOR_ID = "CodeGenerator";
-
+    /**
+     *图形验证码处理器
+     */
+    String IMAGE_VALIDATE_CODE_PROCESSOR = "imageValidateCodeProcessor";
+    /**
+     * 短信验证码处理器
+     */
+    String SMS_VALIDATE_CODE_PROCESSOR = "smsValidateCodeProcessor";
 }

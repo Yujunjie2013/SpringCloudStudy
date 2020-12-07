@@ -18,7 +18,7 @@ import org.springframework.social.connect.ConnectionFactory;
  * 微信登录配置
  *
  */
-@Configuration
+//@Configuration
 @ConditionalOnProperty(prefix = "org.junjie.social.weixin", name = "appId")
 public class WeixinAutoConfig extends SocialConfigurerAdapter {
 

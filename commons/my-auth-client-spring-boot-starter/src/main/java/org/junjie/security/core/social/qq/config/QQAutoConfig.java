@@ -13,7 +13,7 @@ import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactory;
 
-@Configuration
+//@Configuration
 //这里表示只有配置了org.junjie.social.qq中的appId配置项，下面的配置才生效,否则该类不生效
 @ConditionalOnProperty(prefix = "org.junjie.social.qq", name = "appId")
 public class QQAutoConfig extends /*SocialAutoConfigurerAdapter*/SocialConfigurerAdapter {

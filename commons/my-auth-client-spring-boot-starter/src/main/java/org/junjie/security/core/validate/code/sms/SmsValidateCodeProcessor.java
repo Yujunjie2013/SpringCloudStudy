@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * 短信验证码处理器
  */
-@Component("smsValidateCodeProcessor")
+//@Component("smsValidateCodeProcessor")
 public class SmsValidateCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {
 
     @Autowired

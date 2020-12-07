@@ -3,18 +3,19 @@ package org.junjie.security.core.validate.code;
 import org.junjie.security.core.properties.SecurityConstants;
 import org.junjie.security.core.properties.SecurityProperties;
 import org.junjie.security.core.validate.code.image.ImageCodeGenerator;
+import org.junjie.security.core.validate.code.image.ImageValidateCodeProcessor;
 import org.junjie.security.core.validate.code.sms.DefaultSmsCodeSender;
 import org.junjie.security.core.validate.code.sms.SmsCodeGenerator;
 import org.junjie.security.core.validate.code.sms.SmsCodeSender;
+import org.junjie.security.core.validate.code.sms.SmsValidateCodeProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 验证码bean配置类
  */
-@Configuration
+//@Configuration
 public class ValidateCodeBeanConfig {
     @Autowired
     private SecurityProperties securityProperties;
@@ -54,5 +55,17 @@ public class ValidateCodeBeanConfig {
     @ConditionalOnMissingBean(SmsCodeSender.class)
     public SmsCodeSender smsCodeSender() {
         return new DefaultSmsCodeSender();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(name = SecurityConstants.SMS_VALIDATE_CODE_PROCESSOR)
+    public ValidateCodeProcessor smsValidateCodeProcessor() {
+        return new SmsValidateCodeProcessor();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(name = SecurityConstants.IMAGE_VALIDATE_CODE_PROCESSOR)
+    public ValidateCodeProcessor imageValidateCodeProcessor() {
+        return new ImageValidateCodeProcessor();
     }
 }
