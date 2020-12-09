@@ -2,7 +2,6 @@ package com.junjie.common.bean;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +31,6 @@ public class BaseEntity implements Serializable {
     /**
      * 逻辑删除
      */
-    @JsonIgnore
     @TableField(select = false)
     protected Boolean logicDelete;
     /**

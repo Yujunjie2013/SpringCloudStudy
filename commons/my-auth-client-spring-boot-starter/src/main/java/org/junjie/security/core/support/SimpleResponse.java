@@ -24,4 +24,8 @@ public class SimpleResponse<T> implements Serializable {
     public static <T> SimpleResponse<T> success(String status, String message) {
         return new SimpleResponse<>(status, message);
     }
+
+    public static <T> SimpleResponse<T> faild(String message) {
+        return new SimpleResponse<>("9999", message);
+    }
 }

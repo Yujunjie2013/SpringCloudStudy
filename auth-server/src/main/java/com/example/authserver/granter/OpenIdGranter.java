@@ -1,6 +1,7 @@
 package com.example.authserver.granter;
 
 import com.example.authserver.authentication.openid.OpenIdAuthenticationToken;
+import com.example.authserver.config.AuthConstants;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -16,20 +17,20 @@ import java.util.Map;
  * openId授权模式
  */
 public class OpenIdGranter extends AbstractTokenGranter {
-    private static final String GRANT_TYPE = "openId";
+//    private static final String GRANT_TYPE = "openId";
 
     private final AuthenticationManager authenticationManager;
 
     public OpenIdGranter(AuthenticationManager authenticationManager, AuthorizationServerTokenServices tokenServices
             , ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
-        super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
+        super(tokenServices, clientDetailsService, requestFactory, AuthConstants.OPENID_GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
-        String openId = parameters.get("openId");
+        String openId = parameters.get(AuthConstants.OPENID_GRANT_TYPE);
 
         Authentication userAuth = new OpenIdAuthenticationToken(openId, "");
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);

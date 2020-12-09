@@ -5,6 +5,7 @@ import org.junjie.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +15,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -23,10 +26,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import javax.sql.DataSource;
 import java.util.ArrayList;
 
-@Configuration
+
 //声明开启 OAuth 授权服务器的功能。
 @EnableAuthorizationServer
 @Slf4j
+@Import(TokenGranterConfig.class)
+@Configuration
 public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     /**
      * 数据源 DataSource
@@ -34,7 +39,7 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
     @Autowired
     private DataSource dataSource;
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsService myUserDetailsService;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -49,6 +54,11 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
     @Autowired
     private TokenStore redisTokenStore;
+    @Autowired
+    private AuthorizationCodeServices randomValueAuthorizationCodeServices;
+
+    @Autowired
+    private TokenGranter tokenGranter;
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -57,7 +67,9 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
         }
         endpoints.authenticationManager(authenticationManager)
                 .tokenStore(redisTokenStore)
-                .userDetailsService(userDetailsService);
+                .userDetailsService(myUserDetailsService)
+                .authorizationCodeServices(randomValueAuthorizationCodeServices)
+                .tokenGranter(tokenGranter);
         if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
             TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
             ArrayList<TokenEnhancer> enhancers = new ArrayList<>();

@@ -5,7 +5,6 @@ import com.example.authserver.granter.OpenIdGranter;
 import com.example.authserver.granter.PwdImgCodeGranter;
 import org.junjie.security.core.validate.code.ValidateCodeProcessorHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -17,8 +16,6 @@ import org.springframework.security.oauth2.provider.client.ClientCredentialsToke
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGranter;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.token.*;
@@ -27,22 +24,20 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * token授权模式配置类，可添加自定义授权模式
  */
-@Configurable
 public class TokenGranterConfig {
     @Autowired
     private ClientDetailsService clientDetailsService;
     @Autowired
-    private TokenStore tokenStore;
+    private TokenStore customRedisTokenStore;
     @Autowired(required = false)
     private List<TokenEnhancer> tokenEnhancer;
     @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private RandomValueAuthorizationCodeServices authorizationCodeServices;
+    private UserDetailsService myUserDetailsService;
     @Autowired
     private AuthenticationManager authenticationManager;
     //系统中的校验码处理器
@@ -53,7 +48,12 @@ public class TokenGranterConfig {
     private boolean reuseRefreshToken = true;
 
     @Bean
-    public TokenGranter tokenGranter() {
+    public AuthorizationCodeServices randomValueAuthorizationCodeServices() {
+        return new InMemoryAuthorizationCodeServices();
+    }
+
+    @Bean
+    public TokenGranter tokenGranter(AuthorizationCodeServices authorizationCodeServices) {
         if (tokenGranter == null) {
             tokenGranter = new TokenGranter() {
                 private CompositeTokenGranter delegate;
@@ -61,7 +61,7 @@ public class TokenGranterConfig {
                 @Override
                 public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
                     if (delegate == null) {
-                        delegate = new CompositeTokenGranter(getAllTokenGranters());
+                        delegate = new CompositeTokenGranter(Objects.requireNonNull(getAllTokenGranters(authorizationCodeServices)));
                     }
                     return delegate.grant(grantType, tokenRequest);
                 }
@@ -70,9 +70,8 @@ public class TokenGranterConfig {
         return tokenGranter;
     }
 
-    private List<TokenGranter> getAllTokenGranters() {
+    private List<TokenGranter> getAllTokenGranters(AuthorizationCodeServices authorizationCodeServices) {
         AuthorizationServerTokenServices tokenServices = tokenServices();
-        AuthorizationCodeServices authorizationCodeServices = authorizationCodeServices();
         OAuth2RequestFactory requestFactory = requestFactory();
         //添加默认认证模式
         List<TokenGranter> tokenGranters = getDefaultTokenGranters(tokenServices, authorizationCodeServices, requestFactory);
@@ -85,7 +84,7 @@ public class TokenGranterConfig {
             // 添加手机号加密码授权模式
             tokenGranters.add(new MobilePwdGranter(authenticationManager, tokenServices, clientDetailsService, requestFactory));
         }
-        return null;
+        return tokenGranters;
     }
 
     /**
@@ -108,7 +107,7 @@ public class TokenGranterConfig {
         //添加刷新token
         tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetailsService, requestFactory));
         //添加隐式授权
-        tokenGranters.add(new ImplicitTokenGranter(tokenServices, clientDetailsService, requestFactory));
+//        tokenGranters.add(new ImplicitTokenGranter(tokenServices, clientDetailsService, requestFactory));
         //添加客户端模式
         tokenGranters.add(new ClientCredentialsTokenGranter(tokenServices, clientDetailsService, requestFactory));
         if (authenticationManager != null) {
@@ -123,12 +122,6 @@ public class TokenGranterConfig {
         return null;
     }
 
-    private AuthorizationCodeServices authorizationCodeServices() {
-        if (authorizationCodeServices == null) {
-            authorizationCodeServices = new InMemoryAuthorizationCodeServices();
-        }
-        return authorizationCodeServices;
-    }
 
     private AuthorizationServerTokenServices tokenServices() {
         if (tokenServices != null) {
@@ -140,12 +133,12 @@ public class TokenGranterConfig {
 
     private DefaultTokenServices createDefaultTokenServices() {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(tokenStore);
+        tokenServices.setTokenStore(customRedisTokenStore);
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setReuseRefreshToken(reuseRefreshToken);
         tokenServices.setClientDetailsService(clientDetailsService);
         tokenServices.setTokenEnhancer(tokenEnhancer());
-        addUserDetailsService(tokenServices, this.userDetailsService);
+        addUserDetailsService(tokenServices, this.myUserDetailsService);
         return tokenServices;
     }
 

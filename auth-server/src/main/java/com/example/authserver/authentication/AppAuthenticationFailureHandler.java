@@ -43,7 +43,7 @@ public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
         if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
+            response.getWriter().write(objectMapper.writeValueAsString(SimpleResponse.faild(exception.getMessage())));
         } else {
             super.onAuthenticationFailure(request, response, exception);
         }

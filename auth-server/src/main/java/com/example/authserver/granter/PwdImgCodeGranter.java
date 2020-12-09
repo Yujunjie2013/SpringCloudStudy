@@ -1,8 +1,8 @@
 package com.example.authserver.granter;
 
+import com.example.authserver.config.AuthConstants;
 import org.junjie.security.core.validate.code.ValidateCodeProcessorHolder;
 import org.junjie.security.core.validate.code.ValidateCodeType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
@@ -21,14 +21,14 @@ import java.util.Map;
  * Github: https://github.com/zlt2000
  */
 public class PwdImgCodeGranter extends ResourceOwnerPasswordTokenGranter {
-    private static final String GRANT_TYPE = "password_code";
+//    private static final String GRANT_TYPE = "password_code";
 
     //系统中的校验码处理器
     private ValidateCodeProcessorHolder validateCodeProcessorHolder;
 
     public PwdImgCodeGranter(AuthenticationManager authenticationManager, AuthorizationServerTokenServices tokenServices
             , ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, ValidateCodeProcessorHolder validateCodeProcessorHolder) {
-        super(authenticationManager, tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
+        super(authenticationManager, tokenServices, clientDetailsService, requestFactory, AuthConstants.PASSWORD_CODE_GRANT_TYPE);
         this.validateCodeProcessorHolder = validateCodeProcessorHolder;
     }
 

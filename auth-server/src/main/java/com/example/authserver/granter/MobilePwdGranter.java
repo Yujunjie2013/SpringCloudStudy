@@ -1,5 +1,6 @@
 package com.example.authserver.granter;
 
+import com.example.authserver.config.AuthConstants;
 import org.junjie.security.core.token.MobileAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,21 +15,15 @@ import java.util.Map;
 
 /**
  * mobile_password授权模式
- *
- * @author zlt
- * @date 2020/7/11
- * <p>
- * Blog: https://zlt2000.gitee.io
- * Github: https://github.com/zlt2000
  */
 public class MobilePwdGranter extends AbstractTokenGranter {
-    private static final String GRANT_TYPE = "mobile_password";
+//    private static final String GRANT_TYPE = "mobile_password";
 
     private final AuthenticationManager authenticationManager;
 
     public MobilePwdGranter(AuthenticationManager authenticationManager, AuthorizationServerTokenServices tokenServices
             , ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
-        super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
+        super(tokenServices, clientDetailsService, requestFactory, AuthConstants.MOBILE_PASSWORD_GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }
 

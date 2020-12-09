@@ -1,6 +1,6 @@
 package com.junjie.common.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +26,7 @@ public class LoginAppUser extends SysUser implements SocialUserDetails {
     /***
      * 权限重写
      */
-    @JsonIgnore
+    @JSONField(serialize = false)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new HashSet<>();
