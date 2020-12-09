@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
-@SpringBootApplication(scanBasePackages = {"com.junjie"})
-@EntityScan("com.junjie.product.entity")
+@SpringBootApplication
+@EntityScan
 @MapperScan(basePackages = {"com.junjie.*.dao"})
 public class ProductApplication {
 

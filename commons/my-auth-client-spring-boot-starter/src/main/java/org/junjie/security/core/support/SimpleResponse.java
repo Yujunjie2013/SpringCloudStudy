@@ -1,10 +1,27 @@
 package org.junjie.security.core.support;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-@AllArgsConstructor
-public class SimpleResponse {
-    private Object content;
+public class SimpleResponse<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private String status;
+    private String message;
+    private Object desc;
+    private T data;
+    private String[] msgParam;
+
+    private SimpleResponse() {
+    }
+
+    private SimpleResponse(String status, String message) {
+    }
+
+    public static <T> SimpleResponse<T> success(String status, String message) {
+        return new SimpleResponse<>(status, message);
+    }
 }

@@ -3,14 +3,17 @@ package com.example.authserver.config;
 import com.example.authserver.authentication.openid.OpenIdAuthenticationSecurityConfig;
 import org.junjie.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import org.junjie.security.core.authorize.AuthorizeConfigManager;
+import org.junjie.security.core.properties.SecurityConstants;
 import org.junjie.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -20,6 +23,7 @@ import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
 //@EnableWebSecurity
+@Order(100)
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -57,10 +61,20 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        super.configure(web);
+//        web.ignoring().antMatchers(         SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+//                SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM,
+//                SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,
+//                SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_OPENID,
+//                SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*");
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.formLogin()
+
 //                .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
 //                .loginProcessingUrl(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM)
 

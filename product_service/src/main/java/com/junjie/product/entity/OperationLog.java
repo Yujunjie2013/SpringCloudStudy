@@ -4,8 +4,11 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.junjie.common.bean.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class OperationLog extends BaseEntity {
 
     private Long id;
