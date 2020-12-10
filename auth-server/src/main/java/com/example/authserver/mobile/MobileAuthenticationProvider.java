@@ -8,11 +8,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @author zlt
+ * 手机号密码登录认证器
  */
 @Setter
 public class MobileAuthenticationProvider implements AuthenticationProvider {

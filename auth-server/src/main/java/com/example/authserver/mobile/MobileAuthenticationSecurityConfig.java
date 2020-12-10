@@ -26,7 +26,6 @@ public class MobileAuthenticationSecurityConfig extends SecurityConfigurerAdapte
         MobileAuthenticationProvider provider = new MobileAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
-        http.authenticationProvider(provider)
-                .addFilterBefore(new UsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.authenticationProvider(provider);
     }
 }

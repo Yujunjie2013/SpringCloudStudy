@@ -14,10 +14,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * mobile_password授权模式
+ * mobile_password 手机号密码登录授权模式
  */
 public class MobilePwdGranter extends AbstractTokenGranter {
-//    private static final String GRANT_TYPE = "mobile_password";
 
     private final AuthenticationManager authenticationManager;
 

@@ -11,12 +11,6 @@ import org.springframework.scheduling.annotation.Async;
 
 /**
  * 审计日志实现类-数据库
- *
- * @author zlt
- * @date 2020/2/8
- * <p>
- * Blog: https://zlt2000.gitee.io
- * Github: https://github.com/zlt2000
  */
 @Slf4j
 @ConditionalOnProperty(name = "com.junjie-log.log-type", havingValue = "db")
@@ -25,7 +19,7 @@ public class DbAuditServiceImpl implements IAuditService {
     private static final String INSERT_SQL = " insert into sys_logger " +
             " (application_name, class_name, method_name, user_id, user_name, client_id, operation, timestamp) " +
             " values (?,?,?,?,?,?,?,?)";
-//
+    //
     @Autowired
     private JdbcTemplate jdbcTemplate;
 //

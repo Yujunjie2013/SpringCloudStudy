@@ -126,12 +126,4 @@ public abstract class AbstractValidateCodeProcessor<V extends ValidateCode> impl
         return ValidateCodeType.valueOf(type.toUpperCase());
     }
 
-    /**
-     * 构建验证码放入session时的key
-     *
-     * @return sessionKey
-     */
-    private String getSessionKey() {
-        return SESSION_KEY_PREFIX + getValidateCodeType().toString().toUpperCase();
-    }
 }

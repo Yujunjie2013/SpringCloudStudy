@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.AuthenticationKeyGenerator;
 import org.springframework.security.oauth2.provider.token.DefaultAuthenticationKeyGenerator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.JdkSerializationStrategy;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreSerializationStrategy;
 import org.springframework.util.ClassUtils;
@@ -28,9 +27,6 @@ import java.util.*;
  * 1. 支持redis所有集群模式包括cluster模式
  * 2. 使用pipeline减少连接次数，提升性能
  * 3. 自动续签token（可配置是否开启）
- *
- * @author zlt
- * @date 2019/7/7
  */
 public class CustomRedisTokenStore implements TokenStore {
     private static final String ACCESS = "access:";
@@ -46,7 +42,7 @@ public class CustomRedisTokenStore implements TokenStore {
 
     private final RedisConnectionFactory connectionFactory;
     private AuthenticationKeyGenerator authenticationKeyGenerator = new DefaultAuthenticationKeyGenerator();
-//    private RedisTokenStoreSerializationStrategy serializationStrategy = new JdkSerializationStrategy();
+    //    private RedisTokenStoreSerializationStrategy serializationStrategy = new JdkSerializationStrategy();
     private RedisTokenStoreSerializationStrategy serializationStrategy = new JsonRedisTokenStoreSerializationStrategy();
 
     private String prefix = "";

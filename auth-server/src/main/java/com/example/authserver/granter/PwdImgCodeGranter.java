@@ -12,13 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * password添加图像验证码授权模式
- *
- * @author zlt
- * @date 2020/7/11
- * <p>
- * Blog: https://zlt2000.gitee.io
- * Github: https://github.com/zlt2000
+ * password模式增强，grant_type="password_code";添加图像验证码授权模式
  */
 public class PwdImgCodeGranter extends ResourceOwnerPasswordTokenGranter {
 //    private static final String GRANT_TYPE = "password_code";
@@ -38,8 +32,7 @@ public class PwdImgCodeGranter extends ResourceOwnerPasswordTokenGranter {
         String deviceId = parameters.get("deviceId");
         String validCode = parameters.get("validCode");
         //校验图形验证码
-//        validateCodeService.validate(deviceId, validCode);
-        validateCodeProcessorHolder.findValidateCodeProcessor("image").validate(deviceId, validCode, ValidateCodeType.IMAGE);
+        validateCodeProcessorHolder.findValidateCodeProcessor(AuthConstants.TYPE.IMAGE).validate(deviceId, validCode, ValidateCodeType.IMAGE);
         return super.getOAuth2Authentication(client, tokenRequest);
     }
 }

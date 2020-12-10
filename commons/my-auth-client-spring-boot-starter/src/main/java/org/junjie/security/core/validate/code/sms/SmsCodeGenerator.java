@@ -11,7 +11,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * 短信验证码生成器
  */
-//@Component("smsCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
     @Autowired
     private SecurityProperties securityProperties;

@@ -14,5 +14,19 @@ public interface AuthConstants {
      */
     String PASSWORD_CODE_GRANT_TYPE = "password_code";
 
+    /**
+     * 验证码类型
+     */
+    interface TYPE {
+        /**
+         * 短信
+         */
+        String SMS = "sms";
+        /**
+         * 验证码
+         */
+        String IMAGE = "image";
+    }
+
 
 }

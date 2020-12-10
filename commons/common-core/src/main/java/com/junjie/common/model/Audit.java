@@ -7,12 +7,6 @@ import java.time.LocalDateTime;
 
 /**
  * 审计日志
- *
- * @author zlt
- * @date 2020/2/3
- * <p>
- * Blog: https://zlt2000.gitee.io
- * Github: https://github.com/zlt2000
  */
 @Setter
 @Getter

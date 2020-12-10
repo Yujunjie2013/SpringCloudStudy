@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 /**
  * 验证码bean配置类
  */
-//@Configuration
 public class ValidateCodeBeanConfig {
     @Autowired
     private SecurityProperties securityProperties;
@@ -57,13 +56,13 @@ public class ValidateCodeBeanConfig {
         return new DefaultSmsCodeSender();
     }
 
-    @Bean
+    @Bean(name = SecurityConstants.SMS_VALIDATE_CODE_PROCESSOR)
     @ConditionalOnMissingBean(name = SecurityConstants.SMS_VALIDATE_CODE_PROCESSOR)
     public ValidateCodeProcessor smsValidateCodeProcessor() {
         return new SmsValidateCodeProcessor();
     }
 
-    @Bean
+    @Bean(name = SecurityConstants.IMAGE_VALIDATE_CODE_PROCESSOR)
     @ConditionalOnMissingBean(name = SecurityConstants.IMAGE_VALIDATE_CODE_PROCESSOR)
     public ValidateCodeProcessor imageValidateCodeProcessor() {
         return new ImageValidateCodeProcessor();

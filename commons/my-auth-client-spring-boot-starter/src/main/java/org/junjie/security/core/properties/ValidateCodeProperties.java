@@ -1,6 +1,5 @@
 package org.junjie.security.core.properties;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,4 +14,8 @@ public class ValidateCodeProperties {
      * 短信验证码
      */
     private SmsCodeProperties sms = new SmsCodeProperties();
+    /**
+     * 验证码存储总有效期，默认10分钟，600秒
+     */
+    private int totalExpireIn = 600;
 }
