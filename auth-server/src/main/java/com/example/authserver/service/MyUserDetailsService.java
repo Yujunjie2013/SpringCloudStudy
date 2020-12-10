@@ -1,12 +1,14 @@
 package com.example.authserver.service;
 
+import com.junjie.common.feign.UserService;
+import com.junjie.common.model.LoginAppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.security.SocialUser;
@@ -14,11 +16,15 @@ import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 @Component
-public class MyUserDetailsService implements UserDetailsService, SocialUserDetailsService {
+public class MyUserDetailsService implements MobileUserDetailsService, SocialUserDetailsService {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Resource
+    private UserService userService;
 
     /**
      * 表单登录用的
@@ -50,5 +56,18 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         return new SocialUser(userId, encode, true, true,
                 true, true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
+    }
+
+    @Override
+    public UserDetails loadUserByMobile(String mobile) {
+        LoginAppUser loginAppUser = userService.findByMobile(mobile);
+        return checkUser(loginAppUser);
+    }
+
+    private LoginAppUser checkUser(LoginAppUser loginAppUser) {
+        if (loginAppUser != null && !loginAppUser.isEnabled()) {
+            throw new DisabledException("用户已作废");
+        }
+        return loginAppUser;
     }
 }

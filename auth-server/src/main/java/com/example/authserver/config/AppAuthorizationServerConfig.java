@@ -1,14 +1,12 @@
 package com.example.authserver.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junjie.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -42,10 +40,6 @@ public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerA
     private UserDetailsService myUserDetailsService;
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private SecurityProperties securityProperties;
 
     @Autowired(required = false)
     private JwtAccessTokenConverter jwtAccessTokenConverter;

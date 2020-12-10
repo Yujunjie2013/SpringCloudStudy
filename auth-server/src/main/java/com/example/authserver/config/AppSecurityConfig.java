@@ -1,59 +1,57 @@
 package com.example.authserver.config;
 
 import com.example.authserver.authentication.openid.OpenIdAuthenticationSecurityConfig;
+import com.example.authserver.mobile.MobileAuthenticationSecurityConfig;
 import org.junjie.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import org.junjie.security.core.authorize.AuthorizeConfigManager;
-import org.junjie.security.core.properties.SecurityConstants;
 import org.junjie.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
-//@EnableWebSecurity
-@Order(100)
+@Import(PasswordEncoderConfig.class)
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
-    protected AuthenticationSuccessHandler authenticationSuccessHandler;
-    @Autowired
-    protected AuthenticationFailureHandler authenticationFailureHandler;
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     @Autowired
-    private SpringSocialConfigurer springSocialConfigurer;
+    private MobileAuthenticationSecurityConfig mobileAuthenticationSecurityConfig;
     @Autowired
-    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+    private SpringSocialConfigurer springSocialConfigurer;
     @Autowired
     private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
     @Autowired
     private AuthorizeConfigManager authorizeConfigManager;
+    @Autowired
+    protected AuthenticationSuccessHandler authenticationSuccessHandler;
+    @Autowired
+    protected AuthenticationFailureHandler authenticationFailureHandler;
 
-
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
-
+    /**
+     * 这一步的配置是必不可少的，否则SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
+     * @return 认证管理对象
+     */
     @Bean
-    public NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -61,15 +59,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
-//        web.ignoring().antMatchers(         SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-//                SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM,
-//                SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,
-//                SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_OPENID,
-//                SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*");
-    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -85,6 +74,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(validateCodeSecurityConfig)
                 .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
+                .and()
+                .apply(mobileAuthenticationSecurityConfig)
                 .and()
                 .apply(springSocialConfigurer)
                 .and()

@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author zlt
  * 用户实体绑定spring security
  */
 @Getter
@@ -53,7 +52,9 @@ public class LoginAppUser extends SysUser implements SocialUserDetails {
 
     @Override
     public boolean isEnabled() {
-        return getEnabled();
+        //房子空指针错误
+        Boolean enabled = getEnabled();
+        return enabled == null ? false : enabled;
     }
 
     @Override

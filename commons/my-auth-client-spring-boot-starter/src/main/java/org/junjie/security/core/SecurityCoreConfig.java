@@ -3,6 +3,7 @@ package org.junjie.security.core;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
+import com.junjie.common.config.DefaultPasswordConfig;
 import org.junjie.security.core.authorize.AuthorizeConfigManager;
 import org.junjie.security.core.authorize.AuthorizeConfigProvider;
 import org.junjie.security.core.authorize.CodeAuthorizeConfigProvider;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 //使配置的ConfigurationProperties生效
 @EnableConfigurationProperties(SecurityProperties.class)
+@Import(DefaultPasswordConfig.class)
 public class SecurityCoreConfig {
     @Bean
     public ObjectMapper objectMapper() {
@@ -28,11 +30,11 @@ public class SecurityCoreConfig {
         return new Gson();
     }
 
-    @Bean
-    @ConditionalOnMissingBean(PasswordEncoder.class)
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    @ConditionalOnMissingBean(PasswordEncoder.class)
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Bean
     public AuthorizeConfigProvider authorizeConfigProvider() {
