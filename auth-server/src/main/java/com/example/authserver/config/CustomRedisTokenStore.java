@@ -46,7 +46,8 @@ public class CustomRedisTokenStore implements TokenStore {
 
     private final RedisConnectionFactory connectionFactory;
     private AuthenticationKeyGenerator authenticationKeyGenerator = new DefaultAuthenticationKeyGenerator();
-    private RedisTokenStoreSerializationStrategy serializationStrategy = new JdkSerializationStrategy();
+//    private RedisTokenStoreSerializationStrategy serializationStrategy = new JdkSerializationStrategy();
+    private RedisTokenStoreSerializationStrategy serializationStrategy = new JsonRedisTokenStoreSerializationStrategy();
 
     private String prefix = "";
 
