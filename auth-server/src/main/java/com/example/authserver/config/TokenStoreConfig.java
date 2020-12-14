@@ -2,6 +2,7 @@ package com.example.authserver.config;
 
 import com.example.authserver.jwt.AppJwtTokenEnhancer;
 import org.junjie.security.core.properties.SecurityProperties;
+import org.junjie.security.core.token.store.CustomRedisTokenStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

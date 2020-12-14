@@ -28,6 +28,7 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
     // ===================================================================================================
 
     public SmsCodeAuthenticationFilter() {
+        //访问地址 /authentication/mobile
         super(new AntPathRequestMatcher(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE, "POST"));
     }
 
@@ -49,13 +50,13 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
 
         mobile = mobile.trim();
 
-        SmsCodeAuthenticationToken authRequest = new SmsCodeAuthenticationToken(
+        SmsCodeAuthenticationToken authenticationToken = new SmsCodeAuthenticationToken(
                 mobile);
 
         // Allow subclasses to set the "details" property
-        setDetails(request, authRequest);
+        setDetails(request, authenticationToken);
 
-        return this.getAuthenticationManager().authenticate(authRequest);
+        return this.getAuthenticationManager().authenticate(authenticationToken);
     }
 
     /**

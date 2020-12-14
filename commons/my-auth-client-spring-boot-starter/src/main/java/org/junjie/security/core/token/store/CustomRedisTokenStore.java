@@ -1,4 +1,4 @@
-package com.example.authserver.config;
+package org.junjie.security.core.token.store;
 
 import com.junjie.common.constant.SecurityConstants;
 import org.junjie.security.core.properties.SecurityProperties;
@@ -42,7 +42,7 @@ public class CustomRedisTokenStore implements TokenStore {
 
     private final RedisConnectionFactory connectionFactory;
     private AuthenticationKeyGenerator authenticationKeyGenerator = new DefaultAuthenticationKeyGenerator();
-    //    private RedisTokenStoreSerializationStrategy serializationStrategy = new JdkSerializationStrategy();
+    //        private RedisTokenStoreSerializationStrategy serializationStrategy = new JdkSerializationStrategy();
     private RedisTokenStoreSerializationStrategy serializationStrategy = new JsonRedisTokenStoreSerializationStrategy();
 
     private String prefix = "";

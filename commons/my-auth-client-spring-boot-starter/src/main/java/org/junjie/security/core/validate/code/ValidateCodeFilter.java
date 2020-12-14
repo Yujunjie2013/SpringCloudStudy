@@ -33,7 +33,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Autowired
     private SecurityProperties securityProperties;
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
-    private final SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+//    private final SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
     //存放需要进行验证码验证的接口路径
     private final Map<String, ValidateCodeType> urlMap = new HashMap<>();
 

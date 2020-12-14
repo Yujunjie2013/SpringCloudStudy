@@ -62,13 +62,13 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+        http.formLogin();
 
 //                .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
 //                .loginProcessingUrl(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM)
 
-                .successHandler(authenticationSuccessHandler)
-                .failureHandler(authenticationFailureHandler);
+//                .successHandler(authenticationSuccessHandler)
+//                .failureHandler(authenticationFailureHandler);
 
         http
                 .apply(validateCodeSecurityConfig)

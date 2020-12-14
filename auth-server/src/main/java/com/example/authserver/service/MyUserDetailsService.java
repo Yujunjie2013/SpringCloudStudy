@@ -28,10 +28,6 @@ public class MyUserDetailsService implements MobileUserDetailsService, SocialUse
 
     /**
      * 表单登录用的
-     *
-     * @param userName
-     * @return
-     * @throws UsernameNotFoundException
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
