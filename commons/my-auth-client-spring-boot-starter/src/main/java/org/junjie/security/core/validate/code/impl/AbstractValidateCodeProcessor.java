@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junjie.security.core.properties.SecurityConstants;
 import org.junjie.security.core.validate.code.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -17,6 +18,7 @@ public abstract class AbstractValidateCodeProcessor<V extends ValidateCode> impl
     private Map<String, ValidateCodeGenerator> validateCodeGenerators;
 
     @Autowired
+    @Lazy
     private ValidateCodeRepository validateCodeRepository;
 
     @Override

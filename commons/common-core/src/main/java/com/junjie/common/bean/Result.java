@@ -56,6 +56,13 @@ public class Result<T> implements Serializable {
         return body;
     }
 
+    public static <T> Result<T> from(String status, String message) {
+        Result<T> body = new Result<>();
+        body.setStatus(status);
+        body.setMessage(message);
+        return body;
+    }
+
     @Deprecated
     public static <T> Result<T> msg(String msg) {
         Result<T> body = new Result<>();

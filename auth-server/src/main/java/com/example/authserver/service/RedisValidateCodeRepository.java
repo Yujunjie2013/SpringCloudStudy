@@ -1,4 +1,4 @@
-package com.example.authserver.impl;
+package com.example.authserver.service;
 
 import com.central.redis.template.RedisRepository;
 import org.apache.commons.lang3.StringUtils;

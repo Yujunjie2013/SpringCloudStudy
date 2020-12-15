@@ -14,6 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class AuthServerApplication {
 
     public static void main(String[] args) {
+
         System.setProperty("log4j2File", "auth");
         SpringApplication.run(AuthServerApplication.class, args);
     }

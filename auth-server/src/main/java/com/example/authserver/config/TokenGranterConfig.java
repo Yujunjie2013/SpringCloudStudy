@@ -90,11 +90,6 @@ public class TokenGranterConfig {
 
     /**
      * 添加默认认证模式，这里的代码是参考AuthorizationServerEndpointsConfigurer类中的getDefaultTokenGranters方法
-     *
-     * @param tokenServices
-     * @param authorizationCodeServices
-     * @param requestFactory
-     * @return
      */
     private List<TokenGranter> getDefaultTokenGranters(AuthorizationServerTokenServices tokenServices,
                                                        AuthorizationCodeServices authorizationCodeServices,

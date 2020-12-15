@@ -78,14 +78,14 @@ org:
   junjie:
     oauth2:
       storeType: redis #使用redis 存储token
-      jwtSigningKey: junjie
-      clients:
-        - clientId: test
-          clientSecret: test
-          accessTokenValiditySeconds: 3600
-        - clientId: clientapp
-          clientSecret: 112233
-          accessTokenValiditySeconds: 3600
+#      jwtSigningKey: junjie
+#      clients:
+#        - clientId: test
+#          clientSecret: test
+#          accessTokenValiditySeconds: 3600
+#        - clientId: clientapp
+#          clientSecret: 112233
+#          accessTokenValiditySeconds: 3600
 
 ##### feign配置
 #  feign.sentinel.enabled=true
@@ -125,3 +125,8 @@ feign:
     max-connections: 1000
     max-connections-per-route: 100
 
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

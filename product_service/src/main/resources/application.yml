@@ -81,3 +81,9 @@ security:
     # OAuth2 Resource 配置，对应 ResourceServerProperties 类
     resource:
       token-info-uri: http://127.0.0.1:8090/oauth/check_token # 校验访问令牌是否有效的地址
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

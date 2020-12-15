@@ -1,8 +1,11 @@
-package org.junjie.security.core.validate.code;
+package com.example.authserver.filter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junjie.security.core.properties.SecurityConstants;
 import org.junjie.security.core.properties.SecurityProperties;
+import org.junjie.security.core.validate.code.ValidateCodeException;
+import org.junjie.security.core.validate.code.ValidateCodeProcessorHolder;
+import org.junjie.security.core.validate.code.ValidateCodeType;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -22,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@Component
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
     //失败处理器
     @Autowired
@@ -33,7 +37,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Autowired
     private SecurityProperties securityProperties;
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
-//    private final SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+    //    private final SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
     //存放需要进行验证码验证的接口路径
     private final Map<String, ValidateCodeType> urlMap = new HashMap<>();
 

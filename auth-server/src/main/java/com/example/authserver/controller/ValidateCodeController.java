@@ -1,10 +1,13 @@
-package org.junjie.security.core.validate.code;
+package com.example.authserver.controller;
 
 import org.junjie.security.core.properties.SecurityConstants;
+import org.junjie.security.core.validate.code.ValidateCodeProcessor;
+import org.junjie.security.core.validate.code.ValidateCodeProcessorHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.endpoint.FrameworkEndpoint;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 验证码校验器
  */
-@FrameworkEndpoint
+@RestController
 public class ValidateCodeController {
 
     @Autowired
