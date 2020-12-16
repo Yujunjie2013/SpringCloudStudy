@@ -33,7 +33,7 @@ public class DefaultSecurityHandlerConfig {
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) -> {
             log.error("AuthenticationEntryPoint===========>", authException);
-            ResponseUtil.responseFailed(objectMapper, response, authException.getMessage());
+            ResponseUtil.responseFailed(objectMapper, response, authException.getCause().toString());
         };
     }
 
@@ -54,7 +54,7 @@ public class DefaultSecurityHandlerConfig {
             @Override
             public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException) throws IOException, ServletException {
                 log.error("OAuth2AccessDeniedHandler--->", authException);
-                ResponseUtil.responseFailed(objectMapper, response, authException.getMessage());
+                ResponseUtil.responseFailed(objectMapper, response, authException.getCause().toString());
             }
         };
     }

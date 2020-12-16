@@ -35,7 +35,8 @@ public class ProductController {
     @GetMapping("/{id}")
     public Result findById(@PathVariable Long id) {
         TbProduct tbProduct = iProductService.findById(id);
-        log.info("查询数据:{}",tbProduct.toString());
+        if (tbProduct != null)
+            log.info("查询数据:{}", tbProduct.toString());
         return Result.succeed(tbProduct);
     }
 

@@ -1,9 +1,9 @@
 package com.example.authserver.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.junjie.common.bean.Result;
 import org.junjie.security.core.properties.LoginType;
 import org.junjie.security.core.properties.SecurityProperties;
-import org.junjie.security.core.support.SimpleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
         if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.getWriter().write(objectMapper.writeValueAsString(SimpleResponse.faild(exception.getMessage())));
+            response.getWriter().write(objectMapper.writeValueAsString(Result.failed(exception.getMessage())));
         } else {
             super.onAuthenticationFailure(request, response, exception);
         }

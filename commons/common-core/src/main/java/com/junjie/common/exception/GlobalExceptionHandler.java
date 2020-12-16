@@ -15,16 +15,9 @@ import java.sql.SQLException;
  * 全局异常处理
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
-@ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = Exception.class)
-    @ResponseBody
-    public Result jsonErrorHandler(Exception e, HttpServletRequest httpServletRequest) {
-        log.error("发生异常", e);
-        return Result.failed("服务打了个盹，请稍后再试");
-    }
+
 
     /**
      * 自定义异常
@@ -97,5 +90,13 @@ public class GlobalExceptionHandler {
     private Result defHandler(String msg, Exception e) {
         log.error(msg, e);
         return Result.failed(msg);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public Result jsonErrorHandler(Exception e, HttpServletRequest httpServletRequest) {
+        log.error("发生异常", e);
+        return Result.failed("服务打了个盹，请稍后再试");
     }
 }

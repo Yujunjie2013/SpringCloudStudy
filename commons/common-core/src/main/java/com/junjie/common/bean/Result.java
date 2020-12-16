@@ -24,7 +24,8 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> succeed(T data) {
         Result<T> body = new Result<>();
-        body.setStatus(ErrorCode.SUCCESS.getValue());
+        body.setStatus(ErrorCode.SUCCESS.getStatus());
+        body.setMessage(ErrorCode.SUCCESS.getValue());
         body.setData(data);
         return body;
     }
@@ -35,7 +36,8 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> failed(T data) {
         Result<T> body = new Result<>();
-        body.setStatus(ErrorCode.UN_KNOW.getValue());
+        body.setStatus(ErrorCode.UN_KNOW.getStatus());
+        body.setMessage(ErrorCode.UN_KNOW.getValue());
         body.setData(data);
         return body;
     }
@@ -52,7 +54,8 @@ public class Result<T> implements Serializable {
      */
     public static <T> Result<T> from(ErrorCode ErrorCode, String... msgParam) {
         Result<T> body = new Result<>();
-        body.setStatus(ErrorCode.getValue());
+        body.setStatus(ErrorCode.getStatus());
+        body.setMessage(ErrorCode.getValue());
         return body;
     }
 
