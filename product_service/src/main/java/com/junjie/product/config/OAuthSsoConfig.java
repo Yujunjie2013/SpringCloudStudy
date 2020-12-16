@@ -1,6 +1,7 @@
 package com.junjie.product.config;
 
 import org.junjie.security.core.config.DefaultSecurityHandlerConfig;
+import org.junjie.security.core.properties.SecurityProperties;
 import org.junjie.security.core.support.RemoteTokenServicesExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -41,6 +42,9 @@ public class OAuthSsoConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private ResourceServerProperties resourceServerProperties;
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources.tokenStore(tokenStore)
@@ -56,7 +60,7 @@ public class OAuthSsoConfig extends ResourceServerConfigurerAdapter {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl = setHttp(http)
                 .authorizeRequests()
                 .antMatchers("/").authenticated()
-//                .antMatchers(securityProperties.getIgnore().getUrls()).permitAll()
+                .antMatchers(securityProperties.getIgnore().getUrls()).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest();
         setAuthenticate(authorizedUrl);

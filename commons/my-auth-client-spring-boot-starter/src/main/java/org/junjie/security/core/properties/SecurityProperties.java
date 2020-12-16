@@ -24,4 +24,8 @@ public class SecurityProperties {
      * 认证相关
      */
     private OAuth2Properties oauth2 = new OAuth2Properties();
+    /**
+     * 配置需要放权的url
+     */
+    private PermitProperties ignore = new PermitProperties();
 }
