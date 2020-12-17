@@ -15,10 +15,10 @@ zuul:
     #      #通过服务id的方式就可以通过注册中心获取对应服务id的url，可以避免url频繁变更修改
     #      service-id: product-service #这个表示需要路由到的服务id，这里一定要写真实的
     #    以上的两种方式还可以使用下面的方式将会简化，直接通过服务id：路径
-    product-server: /product-server/**
+    product-server: /api-product/**
     #      service-id: product-server
-    order-server: /order-server/**
-    auth-server: /auth-server/**
+    order-server: /api-order/**
+    auth-server: /api-auth/**
 
 
 #配置eureka注册中心地址

@@ -101,6 +101,7 @@
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

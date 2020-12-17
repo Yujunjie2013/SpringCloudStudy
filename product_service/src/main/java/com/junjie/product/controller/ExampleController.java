@@ -1,25 +1,20 @@
 package com.junjie.product.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider;
-import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
 public class ExampleController {
 
-    @Autowired
-    private OAuth2ClientProperties oauth2ClientProperties;
+//    @Autowired
+//    private OAuth2ClientProperties oauth2ClientProperties;
 
-    @Value("${security.oauth2.client.access-token-uri}")
-    private String accessTokenUri;
+//    @Value("${security.oauth2.client.access-token-uri}")
+//    private String accessTokenUri;
 
 
     @RequestMapping("/info")
