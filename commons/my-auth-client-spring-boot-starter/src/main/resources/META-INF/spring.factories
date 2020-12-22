@@ -1,9 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.junjie.security.core.SecurityCoreConfig,\
 org.junjie.security.core.validate.code.ValidateCodeBeanConfig,\
-org.junjie.security.core.social.SocialConfig,\
-org.junjie.security.core.social.weixin.config.WeixinAutoConfig,\
-org.junjie.security.core.social.qq.config.QQAutoConfig,\
 org.junjie.security.core.validate.code.ValidateCodeProcessorHolder,\
 org.junjie.security.core.config.TokenStoreConfig
 

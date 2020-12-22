@@ -1,7 +1,7 @@
 package com.example.authserver.config;
 
-import com.example.authserver.authentication.openid.OpenIdAuthenticationSecurityConfig;
 import com.example.authserver.mobile.MobileAuthenticationSecurityConfig;
+import com.example.authserver.openid.OpenIdAuthenticationSecurityConfig;
 import org.junjie.security.core.authorize.AuthorizeConfigManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +29,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     @Autowired
     private MobileAuthenticationSecurityConfig mobileAuthenticationSecurityConfig;
-    @Autowired
-    private SpringSocialConfigurer springSocialConfigurer;
     @Autowired
     private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
     @Autowired
@@ -73,8 +71,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
                 .apply(mobileAuthenticationSecurityConfig)
-                .and()
-                .apply(springSocialConfigurer)
                 .and()
                 .apply(openIdAuthenticationSecurityConfig)
                 .and()

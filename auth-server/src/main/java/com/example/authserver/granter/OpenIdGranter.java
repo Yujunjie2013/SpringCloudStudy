@@ -1,6 +1,6 @@
 package com.example.authserver.granter;
 
-import com.example.authserver.authentication.openid.OpenIdAuthenticationToken;
+import org.junjie.security.core.token.OpenIdAuthenticationToken;
 import com.example.authserver.config.AuthConstants;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +17,6 @@ import java.util.Map;
  * openId授权模式
  */
 public class OpenIdGranter extends AbstractTokenGranter {
-//    private static final String GRANT_TYPE = "openId";
 
     private final AuthenticationManager authenticationManager;
 
@@ -32,7 +31,7 @@ public class OpenIdGranter extends AbstractTokenGranter {
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
         String openId = parameters.get(AuthConstants.OPENID_GRANT_TYPE);
 
-        Authentication userAuth = new OpenIdAuthenticationToken(openId, "");
+        Authentication userAuth = new OpenIdAuthenticationToken(openId);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
         userAuth = authenticationManager.authenticate(userAuth);
         if (userAuth == null || !userAuth.isAuthenticated()) {

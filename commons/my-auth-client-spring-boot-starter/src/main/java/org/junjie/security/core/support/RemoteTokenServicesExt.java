@@ -52,7 +52,7 @@ public class RemoteTokenServicesExt extends RemoteTokenServices {
             if (this.logger.isDebugEnabled()) {
                 this.logger.debug("check_token returned error: " + map.get("error"));
             }
-            throw new InvalidTokenException(accessToken);
+            throw new InvalidTokenException("无效的token:" + accessToken);
         } else if (map.containsKey("active") && !"true".equals(String.valueOf(map.get("active")))) {
             this.logger.debug("check_token returned active attribute: " + map.get("active"));
             throw new InvalidTokenException(accessToken);

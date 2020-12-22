@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.example.authserver.authentication.openid;
+package org.junjie.security.core.token;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,15 +11,12 @@ import java.util.Collection;
 
 
 public class OpenIdAuthenticationToken extends AbstractAuthenticationToken {
-
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
     // ~ Instance fields
     // ================================================================================================
-    //openId
+
     private final Object principal;
-    //providerId
-    private String providerId;
 
     // ~ Constructors
     // ===================================================================================================
@@ -30,10 +27,9 @@ public class OpenIdAuthenticationToken extends AbstractAuthenticationToken {
      * will return <code>false</code>.
      *
      */
-    public OpenIdAuthenticationToken(String openId, String providerId) {
+    public OpenIdAuthenticationToken(String openId) {
         super(null);
         this.principal = openId;
-        this.providerId = providerId;
         setAuthenticated(false);
     }
 
@@ -50,30 +46,28 @@ public class OpenIdAuthenticationToken extends AbstractAuthenticationToken {
                                      Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
-        super.setAuthenticated(true); // must use super, as we override
+        super.setAuthenticated(true);
     }
 
     // ~ Methods
     // ========================================================================================================
 
+    @Override
     public Object getCredentials() {
         return null;
     }
 
+    @Override
     public Object getPrincipal() {
         return this.principal;
     }
 
-    public String getProviderId() {
-        return providerId;
-    }
-
-    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+    @Override
+    public void setAuthenticated(boolean isAuthenticated) {
         if (isAuthenticated) {
             throw new IllegalArgumentException(
                     "Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
         }
-
         super.setAuthenticated(false);
     }
 
