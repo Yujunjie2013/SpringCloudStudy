@@ -27,10 +27,7 @@ public class ProductController {
     @Autowired
     private IProductService iProductService;
     private Map<String, String> map = new HashMap<>();
-    @Value("${server.port}")
-    private String port;
-    @Value("${spring.cloud.client.ip-address}")
-    private String address;
+
 
     @GetMapping("/{id}")
     public Result findById(@PathVariable Long id) {

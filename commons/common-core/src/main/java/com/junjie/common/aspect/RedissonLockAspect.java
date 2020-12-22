@@ -44,35 +44,30 @@ public class RedissonLockAspect {
         }
         log.info("redis锁:" + key);
 
-        boolean res;
+        Object lock;
         if (redissonLock.leaseTime() == -1) {
             //无论锁多久都不会不自动释放
-            res = distributedLock.tryLock(key, redissonLock.waitTime(), redissonLock.timeUnit(), false);
+            lock = distributedLock.tryLock(key, redissonLock.waitTime(), redissonLock.timeUnit(), redissonLock.isFair());
         } else {
-            res = distributedLock.tryLock(key, redissonLock.waitTime(), redissonLock.leaseTime(), redissonLock.timeUnit(), false);
+            lock = distributedLock.tryLock(key, redissonLock.waitTime(), redissonLock.leaseTime(), redissonLock.timeUnit(), redissonLock.isFair());
         }
         try {
-            if (res) {
-//                log.info("取到锁成功:" + rLock.getName());
+            if (lock != null) {
                 return joinPoint.proceed();
             } else {
                 throw new LockException("锁等待超时");
             }
         } finally {
-            distributedLock.unlock();
-//            log.info("释放锁");
+            distributedLock.unlock(lock);
         }
     }
 
     /**
+     * 解析spring EL表达式
+     *
      * @param key    表达式
      * @param method 方法
      * @param args   方法参数
-     * @return
-     * @description 解析spring EL表达式
-     * @author luocan
-     * @date 2018年11月27日 上午10:41:01
-     * @version 1.0.0
      */
     private String parse(String key, Method method, Object[] args) {
         String[] params = discoverer.getParameterNames(method);

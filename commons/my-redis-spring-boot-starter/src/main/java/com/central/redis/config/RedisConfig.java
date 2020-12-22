@@ -13,6 +13,7 @@ import org.redisson.Redisson;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
@@ -49,6 +50,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     private CacheManagerProperties cacheManagerProperties;
 
     @Bean
+    @ConditionalOnMissingBean
     public Redisson redisson() {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://" + host + ":6379")

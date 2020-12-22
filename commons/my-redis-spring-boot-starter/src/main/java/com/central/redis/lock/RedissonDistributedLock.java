@@ -1,5 +1,6 @@
 package com.central.redis.lock;
 
+import com.junjie.common.exception.LockException;
 import com.junjie.common.lock.DistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
@@ -25,29 +26,36 @@ public class RedissonDistributedLock implements DistributedLock {
 
 
     @Override
-    public boolean tryLock(String key, long waitTime, TimeUnit timeUnit, boolean isFair) {
+    public RLock tryLock(String key, long waitTime, TimeUnit timeUnit, boolean isFair) {
         RLock lock = isFair ? redisson.getFairLock(key) : redisson.getLock(key);
         try {
-            return lock.tryLock(waitTime, timeUnit);
+            return lock.tryLock(waitTime, timeUnit) ? lock : null;
         } catch (InterruptedException e) {
             log.error("加锁失败", e);
-            return false;
+            return null;
         }
     }
 
     @Override
-    public boolean tryLock(String key, long waitTime, long leaseTime, TimeUnit timeUnit, boolean isFair) {
+    public RLock tryLock(String key, long waitTime, long leaseTime, TimeUnit timeUnit, boolean isFair) {
         RLock lock = isFair ? redisson.getFairLock(key) : redisson.getLock(key);
         try {
-            return lock.tryLock(waitTime, leaseTime, timeUnit);
+            return lock.tryLock(waitTime, leaseTime, timeUnit) ? lock : null;
         } catch (InterruptedException e) {
             log.error("加锁失败", e);
-            return false;
+            return null;
         }
     }
 
     @Override
-    public void unlock() {
-
+    public void unlock(Object lock) {
+        if (lock instanceof RLock) {
+            RLock rLock = (RLock) lock;
+            if (rLock.isLocked()) {
+                rLock.unlock();
+            }
+        } else {
+            throw new LockException("requires RLock type");
+        }
     }
 }

@@ -44,14 +44,14 @@ eureka:
     lease-renewal-interval-in-seconds: 5  #默认心跳时间是30，为了方便测试，这里改成5
     lease-expiration-duration-in-seconds: 15 #续约到期时间，多长时间没有心跳，剔除该服务(默认是90 )
 
-service-product:
-  ribbon:
-    #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #自定义 负载均衡策略，默认是轮询，这里改成随机
-    connectTimeout: 2000 #Ribbon的连接超时时间
-    ReadTimeout: 4000 #Ribbon读取数据的超时时间
-    OkToRetryOnAllOperations: true #是否对所有操作都重试
-    MaxAutoRetriesNextServer: 1 #切换实例的重试次数
-    MaxAutoRetries: 1 #当前实例的重试次数
+#service-product:
+#  ribbon:
+#    #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #自定义 负载均衡策略，默认是轮询，这里改成随机
+#    connectTimeout: 2000 #Ribbon的连接超时时间
+#    ReadTimeout: 4000 #Ribbon读取数据的超时时间
+#    OkToRetryOnAllOperations: true #是否对所有操作都重试
+#    MaxAutoRetriesNextServer: 1 #切换实例的重试次数
+#    MaxAutoRetries: 1 #当前实例的重试次数
 
 #  配置hystrix默认的超时时间,默认是1000毫秒如果没有相应者服务降级，这里改成3000毫秒
 hystrix:
@@ -85,15 +85,15 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-security:
-  oauth2:
-    # OAuth2 Client 配置，对应 OAuth2ClientProperties 类
-    client:
-      client-id: clientapp
-      client-secret: 112233
-      # 访问令牌获取 URL，自定义的
-      access-token-uri: http://127.0.0.1:8090/oauth/token # 获取访问令牌的地址
-      user-authorization-uri: http://127.0.0.1:8090/oauth/authorize # 获取用户的授权码地址
-    # OAuth2 Resource 配置，对应 ResourceServerProperties 类
-    resource:
-      token-info-uri: http://127.0.0.1:8090/oauth/check_token # 校验访问令牌是否有效的地址
+#security:
+#  oauth2:
+#    # OAuth2 Client 配置，对应 OAuth2ClientProperties 类
+#    client:
+#      client-id: test
+#      client-secret: test
+#      # 访问令牌获取 URL，自定义的
+#      access-token-uri: http://127.0.0.1:8090/oauth/token # 获取访问令牌的地址
+#      user-authorization-uri: http://127.0.0.1:8090/oauth/authorize # 获取用户的授权码地址
+#    # OAuth2 Resource 配置，对应 ResourceServerProperties 类
+#    resource:
+#      token-info-uri: http://127.0.0.1:8090/oauth/check_token # 校验访问令牌是否有效的地址

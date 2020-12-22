@@ -63,10 +63,6 @@
                     <artifactId>guava</artifactId>
                     <groupId>com.google.guava</groupId>
                 </exclusion>
-<!--                <exclusion>-->
-<!--                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>-->
-<!--                    <groupId>org.springframework.cloud</groupId>-->
-<!--                </exclusion>-->
             </exclusions>
         </dependency>
         <dependency>
@@ -105,6 +101,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.junjie</groupId>
+            <artifactId>my-redis-spring-boot-starter</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
