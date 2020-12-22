@@ -49,13 +49,15 @@ public class RedissonDistributedLock implements DistributedLock {
 
     @Override
     public void unlock(Object lock) {
-        if (lock instanceof RLock) {
-            RLock rLock = (RLock) lock;
-            if (rLock.isLocked()) {
-                rLock.unlock();
+        if (lock != null) {
+            if (lock instanceof RLock) {
+                RLock rLock = (RLock) lock;
+                if (rLock.isLocked()) {
+                    rLock.unlock();
+                }
+            } else {
+                throw new LockException("requires RLock type");
             }
-        } else {
-            throw new LockException("requires RLock type");
         }
     }
 }
