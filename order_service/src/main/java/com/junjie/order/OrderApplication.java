@@ -18,9 +18,7 @@ import org.springframework.web.client.RestTemplate;
 public class OrderApplication {
     /**
      * 使用RestTemplate调用远程服务
-     *
-     * @return
-     * @LoadBalanced 使用负载均衡，添加此注解后可以使用Ribbon来实现服务调用
+     * 使用负载均衡，添加此注解后可以使用Ribbon来实现服务调用
      */
     @Bean
     @LoadBalanced

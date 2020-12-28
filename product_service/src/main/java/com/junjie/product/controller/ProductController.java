@@ -1,14 +1,13 @@
 package com.junjie.product.controller;
 
-import com.junjie.common.annotation.RequestLimit;
+import com.junjie.common.annotation.RateLimit;
 import com.junjie.common.bean.Result;
 import com.junjie.product.entity.OperationLog;
-import com.junjie.product.utils.ExcelUtils;
 import com.junjie.product.entity.TbProduct;
 import com.junjie.product.service.IProductService;
+import com.junjie.product.utils.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/product")
@@ -72,7 +70,8 @@ public class ProductController {
     }
 
     @GetMapping("/export")
-    @RequestLimit(limitValue = 1, timeOut = 1, timeUnit = TimeUnit.SECONDS)//并发1，获取锁等待1秒
+//    @RequestLimit(limitValue = 1, timeOut = 1, timeUnit = TimeUnit.SECONDS)//并发1，获取锁等待1秒
+    @RateLimit(rate = 1, timeOut = 1)//一分钟只允许调用1次
     public void exportFile(HttpServletResponse response) {
         long start = System.currentTimeMillis();
         List<OperationLog> personList = new ArrayList<>();
