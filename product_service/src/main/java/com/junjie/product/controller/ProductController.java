@@ -1,5 +1,8 @@
 package com.junjie.product.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.central.redis.template.RedisRepository;
+import com.google.gson.Gson;
 import com.junjie.common.annotation.RateLimit;
 import com.junjie.common.bean.Result;
 import com.junjie.product.entity.OperationLog;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,13 +29,15 @@ public class ProductController {
     @Autowired
     private IProductService iProductService;
     private Map<String, String> map = new HashMap<>();
-
+    @Autowired
+    private RedisRepository redisRepository;
 
     @GetMapping("/{id}")
     public Result findById(@PathVariable Long id) {
         TbProduct tbProduct = iProductService.findById(id);
-        if (tbProduct != null)
+        if (tbProduct != null) {
             log.info("查询数据:{}", tbProduct.toString());
+        }
         return Result.succeed(tbProduct);
     }
 
@@ -42,9 +48,29 @@ public class ProductController {
 
     @PostMapping("/add")
     public String save(@RequestBody TbProduct tbProduct) {
-        iProductService.save(tbProduct);
+        iProductService.add(tbProduct);
         return "保存成功";
     }
+
+    @PutMapping("/update")
+    public Result update(@RequestBody TbProduct tbProduct) {
+        tbProduct.setVersion(1);
+        TbProduct b = iProductService.update(tbProduct);
+        return Result.succeed(b);
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        iProductService.delete(id);
+        return "删除成功";
+    }
+
+    @GetMapping("/{page}/{pageSize}")
+    public Result<IPage<TbProduct>> getList(@PathVariable Long page,@PathVariable Long pageSize){
+        IPage<TbProduct> list = iProductService.getList(page, pageSize);
+        return Result.succeed(list);
+    }
+
 
     @GetMapping("/resp")
     public ResponseEntity<String> test() {
@@ -90,5 +116,19 @@ public class ProductController {
             e.printStackTrace();
             log.error("导出报错:", e);
         }
+    }
+
+    public static void main(String[] args) {
+        TbProduct tbProduct = new TbProduct();
+        tbProduct.setProductDesc("测试商品啊");
+        tbProduct.setCaption("苹果电脑");
+        tbProduct.setPrice(new BigDecimal(100));
+        tbProduct.setType(2);
+        tbProduct.setProductName("苹果手机");
+        tbProduct.setStatus(1L);
+        tbProduct.setInventory(100);
+        Gson gson = new Gson();
+        String s = gson.toJson(tbProduct);
+        System.out.println(s);
     }
 }

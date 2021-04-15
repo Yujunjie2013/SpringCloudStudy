@@ -1,9 +1,11 @@
 package com.central.db.config;
 
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.central.db.mybatis.MySqlInjector;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -11,23 +13,15 @@ import org.springframework.context.annotation.Bean;
  */
 public class MybatisPlusConfig {
 
-    /**
-     * 分页插件
-     */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        // 开启 count 的 join 优化,只针对 left join !!!
-        return new PaginationInterceptor().setCountSqlParser(new JsqlParserCountOptimize(true));
-    }
 
-    /**
-     * 乐观锁
-     *
-     * @return 乐观锁
-     */
+    // 最新版
     @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
+    @ConditionalOnMissingBean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));//分页
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());//乐观锁
+        return interceptor;
     }
 
     /**
@@ -38,4 +32,5 @@ public class MybatisPlusConfig {
     public MySqlInjector myLogicSqlInjector() {
         return new MySqlInjector();
     }
+
 }

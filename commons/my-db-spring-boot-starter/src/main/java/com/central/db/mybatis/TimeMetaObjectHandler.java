@@ -29,7 +29,9 @@ public class TimeMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
-        this.strictInsertFill(metaObject, "create_time", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+        this.strictInsertFill(metaObject, autoFillProperties.getCreateTimeField(), LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+        this.strictInsertFill(metaObject, autoFillProperties.getUpdateTimeField(), LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+        this.strictInsertFill(metaObject, autoFillProperties.getLogicDeleteField(), Boolean.class, autoFillProperties.getLogicDelete()); // 起始版本 3.3.0(推荐使用)
     }
 
     @Override
@@ -50,6 +52,6 @@ public class TimeMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("nothing to fill ....");
-        this.strictUpdateFill(metaObject, "update_time", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
+        this.strictUpdateFill(metaObject, autoFillProperties.getUpdateTimeField(), LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
     }
 }

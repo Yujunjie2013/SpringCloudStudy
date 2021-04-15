@@ -11,9 +11,9 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @ConfigurationProperties(prefix = "com.mydb.mybatis-plus.auto-fill")
 public class MybatisPlusAutoFillProperties {
     /**
-     * 是否开启自动填充字段
+     * 默认删除值
      */
-    private Boolean enabled = true;
+    private Boolean logicDelete = false;
     /**
      * 是否开启了插入填充
      */
@@ -30,4 +30,8 @@ public class MybatisPlusAutoFillProperties {
      * 更新时间字段名
      */
     private String updateTimeField = "updateTime";
+    /**
+     * 更新逻辑删除
+     */
+    private String logicDeleteField = "logicDelete";
 }

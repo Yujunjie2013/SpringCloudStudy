@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.central.db.mybatis.MySqlInjector;
+import com.central.db.mybatis.SqlCostInterceptor;
 import com.central.db.mybatis.TimeMetaObjectHandler;
 import com.central.db.properties.MybatisPlusAutoFillProperties;
-import com.central.db.mybatis.SqlCostInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
@@ -32,15 +33,12 @@ public class MasterDataSourceConfig {
     @Bean(name = "masterSqlSessionFactory")
     @Primary
     public SqlSessionFactory masterSqlSessionFactory(DataSource masterDataSource,
-                                                     GlobalConfig globalConfig)
-            throws Exception {
-//        BaseTypeHandler
+                                                     GlobalConfig globalConfig,
+                                                     MybatisPlusInterceptor mybatisPlusInterceptor) throws Exception {
         MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
         sessionFactory.setDataSource(masterDataSource);
-        sessionFactory.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
-//        Interceptor[] plugins = new Interceptor[]{pageHelper(), new SqlCostInterceptor()};
-        Interceptor[] plugins = new Interceptor[]{new SqlCostInterceptor()};
+        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION));
+        Interceptor[] plugins = new Interceptor[]{new SqlCostInterceptor(), mybatisPlusInterceptor};
         sessionFactory.setPlugins(plugins);
         MybatisConfiguration configuration = new MybatisConfiguration();
         configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
@@ -57,7 +55,7 @@ public class MasterDataSourceConfig {
      * @return
      */
     @Bean
-    public GlobalConfig globalConfiguration() {
+    public GlobalConfig globalConfiguration(MySqlInjector mySqlInjector) {
         GlobalConfig conf = new GlobalConfig();
         GlobalConfig.DbConfig dbConfig = new GlobalConfig.DbConfig();
         dbConfig.setLogicNotDeleteValue("0");
@@ -65,7 +63,7 @@ public class MasterDataSourceConfig {
         dbConfig.setLogicDeleteField("logicDelete");
         dbConfig.setUpdateStrategy(FieldStrategy.NOT_NULL);
         conf.setMetaObjectHandler(new TimeMetaObjectHandler(autoFillProperties));
-        conf.setSqlInjector(new MySqlInjector());
+        conf.setSqlInjector(mySqlInjector);
         conf.setDbConfig(dbConfig);
         return conf;
     }

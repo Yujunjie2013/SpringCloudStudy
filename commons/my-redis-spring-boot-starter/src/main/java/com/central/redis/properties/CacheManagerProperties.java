@@ -14,17 +14,19 @@ public class CacheManagerProperties {
      * Redis缓存配置集合
      */
     private List<CacheConfig> configs;
-
-
+    /**
+     * 没有指定缓存名称，默认的缓存有效期300秒=5分钟
+     */
+    private long defaultTime=300;
     @Setter
     @Getter
     public static class CacheConfig {
         /**
-         * cache key
+         * 指定的缓存名称
          */
-        private String key;
+        private String cacheName;
         /**
-         * 过期时间，sec
+         * 指定缓存名称的过期时间，单位秒
          */
         private long second = 60;
     }

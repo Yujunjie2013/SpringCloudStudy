@@ -14,7 +14,7 @@ spring:
     name: product-server
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
@@ -68,7 +68,15 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-
+com:
+  mycache-manager:
+    configs: #自定义几个缓存的有效期
+      - cacheName: Second10
+        second: 10
+      - cacheName: Hour2
+        second: 3600
+      - cacheName: ProductServiceImpl
+        second: 20
 #security:
 #  oauth2:
 #    # OAuth2 Client 配置，对应 OAuth2ClientProperties 类
@@ -85,4 +93,4 @@ management:
 logging:
   level:
     org:
-      springframework: debug
+      springframework: info

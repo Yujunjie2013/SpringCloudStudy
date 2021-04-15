@@ -85,14 +85,12 @@ public class RedisConfig extends CachingConfigurerSupport {
         RedisSerializer<Object> redisSerializer = RedisSerializer.json();
         if (configSize > 0) {
             cacheManagerProperties.getConfigs().forEach(e -> {
-                RedisCacheConfiguration conf = getDefConf(redisKey, redisSerializer)
-                        .entryTtl(Duration.ofSeconds(e.getSecond()));
-                redisCacheConfigurationMap.put(e.getKey(), conf);
+                RedisCacheConfiguration conf = getDefConf(redisKey, redisSerializer).entryTtl(Duration.ofSeconds(e.getSecond()));
+                redisCacheConfigurationMap.put(e.getCacheName(), conf);
             });
         }
-
-        RedisCacheConfiguration redisCacheConfiguration = getDefConf(redisKey, redisSerializer)
-                .entryTtl(Duration.ofMinutes(5));
+        //如果没有设置有效期的key,则默认5分钟过期
+        RedisCacheConfiguration redisCacheConfiguration = getDefConf(redisKey, redisSerializer).entryTtl(Duration.ofSeconds(cacheManagerProperties.getDefaultTime()));
         return RedisCacheManager
                 .builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
                 .cacheDefaults(redisCacheConfiguration)
