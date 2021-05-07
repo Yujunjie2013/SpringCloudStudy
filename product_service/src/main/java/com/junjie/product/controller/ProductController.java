@@ -11,6 +11,7 @@ import com.junjie.product.service.IProductService;
 import com.junjie.product.utils.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +32,13 @@ public class ProductController {
     private Map<String, String> map = new HashMap<>();
     @Autowired
     private RedisRepository redisRepository;
+    @Value("${server.port}")
+    private String port;
 
     @GetMapping("/{id}")
     public Result findById(@PathVariable Long id) {
+        log.info("findById--->" + port);
         TbProduct tbProduct = iProductService.findById(id);
-        if (tbProduct != null) {
-            log.info("查询数据:{}", tbProduct.toString());
-        }
         return Result.succeed(tbProduct);
     }
 
@@ -66,7 +67,7 @@ public class ProductController {
     }
 
     @GetMapping("/{page}/{pageSize}")
-    public Result<IPage<TbProduct>> getList(@PathVariable Long page,@PathVariable Long pageSize){
+    public Result<IPage<TbProduct>> getList(@PathVariable Long page, @PathVariable Long pageSize) {
         IPage<TbProduct> list = iProductService.getList(page, pageSize);
         return Result.succeed(list);
     }

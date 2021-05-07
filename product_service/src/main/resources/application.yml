@@ -1,5 +1,5 @@
 server:
-  port: 9001
+  port: 9002
   servlet:
     session:
       cookie:
@@ -58,8 +58,8 @@ eureka:
     #    向注册中心注册服务ID，这里的服务ID写成当前服务的IP和端口号
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     health-check-url-path: /actuator/health
-    lease-renewal-interval-in-seconds: 5  #默认心跳时间是30，为了方便测试，这里改成5
-    lease-expiration-duration-in-seconds: 15 #续约到期时间，多长时间没有心跳，剔除该服务(默认是90 )
+    lease-renewal-interval-in-seconds: 30  #默认心跳时间是30，为了方便测试，这里改成5
+    lease-expiration-duration-in-seconds: 90 #续约到期时间，多长时间没有心跳，剔除该服务(默认是90 )
 management:
   endpoints:
     web:
